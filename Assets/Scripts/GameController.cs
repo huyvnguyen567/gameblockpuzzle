@@ -33,7 +33,13 @@ public class GameController : MonoBehaviour
     {
         CheckAndClearFullColumns();
         CheckAndClearFullRows();
-        //CheckAndClearSquare(3,3);
+        for (int x = 0; x < width; x += 3)
+        {
+            for (int y = 0; y < height; y += 3)
+            {
+                CheckAndClearSquare(x, y);
+            }
+        }
     }
     private void InitializeGrid()
     {
@@ -204,36 +210,40 @@ public class GameController : MonoBehaviour
             }
         }
     }
-    //public void CheckAndClearSquare(int startX, int startY)
-    //{
-    //    bool isSquareFull = true;
-    //    for(int x = startX; x < startX + 3; x++)
-    //    {
-    //        for(int y = startY; y < startY + 3; y++)
-    //        {
-    //            Transform tile = grid[x, y];
-    //            if(tile == null || !tile.CompareTag("TileShape"))
-    //            {
-    //                isSquareFull = false;
-    //                break;
-    //            }
-    //            if (isSquareFull)
-    //            {
-    //                for(x = startX; x < startX + 3; x++)
-    //                {
-    //                    for (y = 0; y < heighty; y++)
-    //                    {
-    //                        if (tile != null || tile.CompareTag("TileShape"))
-    //                        {
-    //                            Destroy(tile.gameObject);
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-        
-     
+    public void CheckAndClearSquare(int startX, int startY)
+    {
+        bool isSquareFull = true;
+
+        for (int x = startX; x < startX + 3; x++)
+        {
+            for (int y = startY; y < startY + 3; y++)
+            {
+                Transform tile = grid[x, y];
+                if (tile == null || !tile.CompareTag("TileShape"))
+                {
+                    isSquareFull = false;
+                    break;
+                }
+
+            }
+        }
+        if (isSquareFull)
+        {
+            for (int x = startX; x < startX + 3; x++)
+            {
+                for (int y = startY; y < startY + 3; y++)
+                {
+                    Transform tile = grid[x, y];
+                    if (tile != null || tile.CompareTag("TileShape"))
+                    {
+                        Destroy(tile.gameObject);
+                    }
+                }
+            }
+        }
+    }
+
+
     //}
     //public void HightLightTile(Tile tileShape, Transform tetromino)
     //{
