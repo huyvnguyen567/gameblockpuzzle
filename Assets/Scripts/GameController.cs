@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
@@ -11,10 +11,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private int height = 9;
     [SerializeField] private List<GameObject> tetrominoPrefabs;
     [SerializeField] private Transform[] spawnPositions;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] int scorePerBlock = 2;
+    [SerializeField] bool checkGameOver = false;
+    private int score = 0;
     private List<GameObject> currentTetrominos = new List<GameObject>();
     private List<Tile> listTiles = new List<Tile>();
     public Transform[,] grid; // Lưới grid lưu trữ thông tin về ô
-
 
     private void Awake()
     {
@@ -27,7 +30,7 @@ public class GameController : MonoBehaviour
         InitializeGrid();
         // Sinh ngẫu nhiên các khối tetromino
         SpawnInitialTetrominos();
-
+        scoreText.text = score.ToString();
     }
     private void Update()
     {
@@ -40,10 +43,16 @@ public class GameController : MonoBehaviour
                 CheckAndClearSquare(x, y);
             }
         }
+        CheckGameOver();
+    }
+    public void IncreaseScore(int amount)
+    {
+        score += amount;
+        scoreText.text = score.ToString();
     }
     private void InitializeGrid()
     {
-        grid = new Transform[width, height]; // Khởi tạo lưới grid có kích thước 10x20
+        grid = new Transform[width, height]; // Khởi tạo lưới grid có kích thước width * height
 
         // Lặp qua tất cả các ô trong lưới grid để khởi tạo các ô
         for (int x = 0; x < width; x++)
@@ -67,7 +76,6 @@ public class GameController : MonoBehaviour
     {
         return new Vector3(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), 0);
     }
-
 
     public bool IsGridCellEmpty(Vector3 gridPosition)
     {
@@ -134,7 +142,6 @@ public class GameController : MonoBehaviour
     public void TetrominoUsed(GameObject tetromino)
     {
         currentTetrominos.Remove(tetromino);
-
         if (currentTetrominos.Count == 0)
         {
             // Sinh ngẫu nhiễn các tetromino mới
@@ -167,25 +174,28 @@ public class GameController : MonoBehaviour
             }
             if (isRowFull)
             {
-                Debug.Log("full dòng " +y);
+                Debug.Log("Full dòng " +y);
                 //Xóa dòng
                 for (int x = 0; x < width; x++)
                 {
                     Transform tile = grid[x, y];
                     if (tile != null && tile.CompareTag("TileShape"))
                     {
+                        IncreaseScore(scorePerBlock);
                         Destroy(tile.gameObject);
+                        
                     }
                 }
             }
+
         }
     }
     public void CheckAndClearFullColumns()
     {
-        for (int x = 0; x < height; x++)
+        for (int x = 0; x < width; x++)
         {
             bool isColumnFull = true;
-            for (int y = 0; y < width; y++)
+            for (int y = 0; y < height; y++)
             {
                 Transform tile = grid[x, y];
                 if (tile == null || !tile.CompareTag("TileShape"))
@@ -196,7 +206,7 @@ public class GameController : MonoBehaviour
             }
             if (isColumnFull)
             {
-                Debug.Log("full cột " + x);
+                Debug.Log("Full cột " + x);
 
                 //Xóa cột
                 for (int y = 0; y < height; y++)
@@ -204,6 +214,7 @@ public class GameController : MonoBehaviour
                     Transform tile = grid[x, y];
                     if (tile != null && tile.CompareTag("TileShape"))
                     {
+                        IncreaseScore(scorePerBlock);
                         Destroy(tile.gameObject);
                     }
                 }
@@ -228,7 +239,7 @@ public class GameController : MonoBehaviour
             }
         }
         if (isSquareFull)
-        {
+        {  
             for (int x = startX; x < startX + 3; x++)
             {
                 for (int y = startY; y < startY + 3; y++)
@@ -236,6 +247,7 @@ public class GameController : MonoBehaviour
                     Transform tile = grid[x, y];
                     if (tile != null || tile.CompareTag("TileShape"))
                     {
+                        IncreaseScore(scorePerBlock);
                         Destroy(tile.gameObject);
                     }
                 }
@@ -243,7 +255,59 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void CheckGameOver()
+    {
+        bool canAdd = false;
+        foreach (GameObject tetromino in currentTetrominos)
+        {
+            for (int i = 0; i < width + 1 - tetromino.GetComponent<Tetromino>().width; i++)
+            {
+                for (int j = 0; j < height + 1 - tetromino.GetComponent<Tetromino>().height; j++)
+                {
+                    bool isEmpty = true;
+                    foreach (Transform tile in tetromino.transform)
+                    {
+                        int x = (int)Mathf.Round(tile.localPosition.x) + i;
+                        int y = (int)Mathf.Round(tile.localPosition.y) + j;
+                        
+                        if ((x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1)))
+                        {
+                            Transform gridCell = grid[x, y];
+                            //Debug.Log(x + " " + y + " " + tetromino.name);
+                            if (gridCell != null && gridCell.CompareTag("TileShape"))
+                            {
+                                //Debug.Log("x: " + x + " y: " + y + /*" name: " +gridCell.name +*/ "tag: " + gridCell.CompareTag("TileShape"));
+                                isEmpty = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (isEmpty)
+                    {
+                        canAdd = true;
+                        break;
+                    }
+                }
+            }  
+        }
+        if (canAdd)
+        {
+            Debug.Log("Tiếp tục chơi!");
+        }
+        else
+        {
+            Debug.Log("Thua! Không thể đặt tetromino nào vào grid.");
+        }
 
+    }
+}
+    //public bool KiemTra(Transform tetrominoTransform)
+    //{
+    //    foreach(var tile in tetrominoTransform)
+    //    {
+
+    //    }
+    //}
     //}
     //public void HightLightTile(Tile tileShape, Transform tetromino)
     //{
@@ -262,4 +326,4 @@ public class GameController : MonoBehaviour
     //        }
     //    }
     //}
-}
+
