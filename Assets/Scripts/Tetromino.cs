@@ -8,12 +8,14 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 {
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float highlightDistance = 0.2f;
+    [SerializeField] private Vector3 offset = new Vector3(0, 3, 0);
     private Vector3 initialPosition;
-    private Vector3 offset = new Vector3(0, 3, 0);
-    public int height;
-    public int width;
+    private int height;
+    private int width;
+    public int Height => height;
+    public int Width => width;
 
-    private void Start()
+    private void Awake()
     {
         initialPosition = transform.position;
         int maxX = int.MinValue;
@@ -41,6 +43,10 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         //Debug.Log(width + " " + height + " " + name);
 
     }
+    private void Start()
+    {
+        
+    }
     
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -62,15 +68,26 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             target += offset;
             target.z = -1;
             transform.position = target;
-        } 
+        }
+        
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //Kiểm tra và đặt Tetromino vào lưới grid
-        SnapToValidGridCell();
+        if (!GameController.Instance.IsPlaced(transform.gameObject))
+            //Kiểm tra và đặt Tetromino vào lưới grid
+            StartCoroutine(SnapAndCheckGameOver());
     }
 
+    private IEnumerator SnapAndCheckGameOver()
+    {
+        SnapToValidGridCell();
+
+        // Chờ cho tất cả các hàm khác trong SnapToValidGridCell hoàn thành
+        yield return new WaitForEndOfFrame();
+
+        GameController.Instance.CheckGameOver();
+    }
     private void SnapToValidGridCell()
     {
         bool canSnap = true;
@@ -89,6 +106,15 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             GameController.Instance.IncreaseScore(transform.childCount);
             GameController.Instance.SnapTetrominoToGrid(transform);
             GameController.Instance.TetrominoUsed(transform.gameObject);
+            GameController.Instance.CheckAndClearFullColumns();
+            GameController.Instance.CheckAndClearFullRows();
+            for (int x = 0; x < GameController.Instance.Width; x += 3)
+            {
+                for (int y = 0; y < GameController.Instance.Height; y += 3)
+                {
+                    GameController.Instance.CheckAndClearSquare(x, y);
+                }
+            }
         }
         else
         {

@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    public static DataManager ins;
-    private int score;
-    public int Score { 
+    public static DataManager Instance;
+    [SerializeField] private int score = 0;
+    [SerializeField] private int scorePerBlock = 2;
+
+    public int Score
+    {
         get { return score; }
-        set {
+        set
+        {
             score = value;
+        }
+    }
+    public int ScorePerBlock
+    {
+        get { return scorePerBlock; }
+        set
+        {
+            scorePerBlock = value;
         }
     }
 
     private void Awake()
     {
-        if (ins != null)
+        if (Instance == null)
         {
-            ins = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
