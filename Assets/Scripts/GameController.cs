@@ -22,7 +22,14 @@ public class GameController : MonoBehaviour
     private List<Tile> listTiles = new List<Tile>();
     public Transform[,] grid; // Lưới grid lưu trữ thông tin về ô
     private bool gameOver = false;
-    
+    public bool GameOver
+    {
+        get { return gameOver; }
+        set
+        {
+            gameOver = value;
+        }
+    }
 
     public int Width => width;
     public int Height => height;
@@ -47,7 +54,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-
+        DataManager.Instance.Score = 0;
         UIController.Instance.UpdateWindow(WindowType.Gameplay);
         UIController.Instance.ShowWindow(WindowType.Gameplay, true);
     }
@@ -335,10 +342,10 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            gameOver = true;
             UIController.Instance.UpdateWindow(WindowType.Gameover);
             UIController.Instance.ShowWindow(WindowType.Gameover, true);
             Debug.Log("Thua! Không thể đặt tetromino nào vào grid.");
-            DataManager.Instance.Score = 0;
         }
 
     }
