@@ -16,6 +16,7 @@ public class ObjectPooling : MonoBehaviour
         {
             Tile obj = Instantiate(tilePrefab);
             obj.gameObject.SetActive(false);
+            obj.transform.SetParent(gameObject.transform);
             objectPoolTiles.Add(obj);
         }
     }

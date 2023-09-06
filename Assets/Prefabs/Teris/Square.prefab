@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5667231bd140c4a89b976b402ee474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &1904332043234810349
 SpriteRenderer:
   m_ObjectHideFlags: 0

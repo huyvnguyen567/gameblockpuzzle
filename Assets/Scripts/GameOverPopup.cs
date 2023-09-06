@@ -5,13 +5,17 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameOverWindow : MonoBehaviour
+public class GameOverPopup : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
     public void OnReplayClick()
     {
         GameController.Instance.ReplayGame();
+    }
+    public void OnMainMenuClick()
+    {
+        GameController.Instance.LoadMainMenu();
     }
 
     public void ActiveGameOverWindow(bool isActive)

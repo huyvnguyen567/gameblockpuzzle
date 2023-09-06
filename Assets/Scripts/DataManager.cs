@@ -7,6 +7,7 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
     [SerializeField] private int score = 0;
     [SerializeField] private int scorePerBlock = 2;
+    [SerializeField] private int highScore = 0;
 
     public int Score
     {
@@ -25,6 +26,15 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public int HighScore
+    {
+        get { return highScore; }
+        set
+        {
+            highScore = value;
+        }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,5 +46,10 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
     }
 }

@@ -37,8 +37,8 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             }
         }
 
-        width = maxX + 1; // Add 1 because x is 0-based index
-        height = maxY + 1; // Add 1 because y is 0-based index
+        width = maxX + 1; 
+        height = maxY + 1; 
 
         //Debug.Log(width + " " + height + " " + name);
 
@@ -68,40 +68,83 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             target += offset;
             target.z = -1;
             transform.position = target;
+            HighLightColor();
+
         }
-        
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!GameController.Instance.GameOver)
+        foreach(Transform tile in GameController.Instance.gridContainer)
+        {
+            tile.GetComponent<Tile>().ResetColor();
+        }
+        
+        if (!GameController.Instance.GameOver) 
+        {
             //Kiểm tra và đặt Tetromino vào lưới grid
             StartCoroutine(SnapAndCheckGameOver());
+        }
+            
     }
 
+    public void HighLightColor()
+    {
+        
+        if (CanSnap())
+        {
+            foreach (Transform tile in transform)
+            {
+                var origin = tile.position;
+                RaycastHit2D hit = Physics2D.Raycast(origin, transform.forward, 10, layerMask);
+                if (hit.collider == null || !GameController.Instance.IsGridCellEmpty(tile.position))
+                {
+                    
+                }
+                else
+                {
+                    hit.collider.GetComponent<Tile>().HighlightTile();
+                }
+            }
+        }
+        else
+        {
+            foreach (Transform tile in GameController.Instance.gridContainer)
+            {
+                tile.GetComponent<Tile>().ResetColor();
+            }
+        }
+
+       
+
+
+    }
+
+    public bool CanSnap()
+    {
+        foreach (Transform tile in transform)
+        {
+            var origin = tile.position;
+            RaycastHit2D hit = Physics2D.Raycast(origin, transform.forward, 10, layerMask);
+            if (hit.collider == null || !GameController.Instance.IsGridCellEmpty(tile.position))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     private IEnumerator SnapAndCheckGameOver()
     {
         SnapToValidGridCell();
 
         // Chờ cho tất cả các hàm khác trong SnapToValidGridCell hoàn thành
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
 
         GameController.Instance.CheckGameOver();
     }
     private void SnapToValidGridCell()
-    {
-        bool canSnap = true;
-        foreach (Transform tile in transform)
-        {
-            var origin = tile.position;
-            RaycastHit2D hit = Physics2D.Raycast(origin, transform.forward, 10, layerMask);
-            Debug.DrawRay(origin, Vector3.forward * 5, Color.red);
-            if (hit.collider == null || !GameController.Instance.IsGridCellEmpty(tile.position))
-            {
-                canSnap = false;
-            }
-        }
-        if (canSnap)
+    {  
+        if (CanSnap())
         {
             GameController.Instance.IncreaseScore(transform.childCount);
             GameController.Instance.SnapTetrominoToGrid(transform);

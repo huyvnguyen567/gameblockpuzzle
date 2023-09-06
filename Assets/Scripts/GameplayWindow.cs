@@ -7,16 +7,15 @@ using TMPro;
 public class GameplayWindow : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
-    //[SerializeField] private GameObject backgroundGamePlay;
+    [SerializeField] private TextMeshProUGUI highScoreText;
 
- 
     public void ActiveGamePlayWindow(bool isActive)
     {
         gameObject.SetActive(isActive);
-        //backgroundGamePlay.SetActive(isActive);
     }
     public void UpdateScoreText()
     {
-        scoreText.text = DataManager.Instance.Score + "" ;
+        scoreText.text = "Score: " +DataManager.Instance.Score;
+        highScoreText.text = "High Score: " +DataManager.Instance.HighScore;
     }
 }

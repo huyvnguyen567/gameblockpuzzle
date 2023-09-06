@@ -191,6 +191,18 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.0555556
       objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
 --- !u!4 &1899072371114432877 stripped
@@ -308,6 +320,18 @@ PrefabInstance:
     - target: {fileID: 5373527187750750043, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.0555556
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
@@ -427,6 +451,18 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.0555556
       objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
 --- !u!4 &4991681187259749894 stripped
@@ -544,6 +580,18 @@ PrefabInstance:
     - target: {fileID: 5373527187750750043, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.0555556
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957988434842185146, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
+      propertyPath: highlightColor.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
