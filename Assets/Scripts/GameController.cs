@@ -24,6 +24,15 @@ public class GameController : MonoBehaviour
     private List<Tile> listTiles = new List<Tile>();
     public Transform[,] grid; // Lưới grid lưu trữ thông tin về ô
     private bool gameOver = false;
+    [SerializeField] private bool checkDestroyed = false;
+    public bool CheckDestroyed
+    {
+        get { return checkDestroyed; }
+        set
+        {
+            checkDestroyed = value;
+        }
+    }
     public bool GameOver
     {
         get { return gameOver; }
@@ -242,6 +251,7 @@ public class GameController : MonoBehaviour
             }
             if (isRowFull)
             {
+
                 //Debug.Log("Full dòng " +y);
                 //Xóa dòng
                 for (int x = 0; x < width; x++)
@@ -250,9 +260,12 @@ public class GameController : MonoBehaviour
                     if (tile != null && tile.CompareTag("TileShape"))
                     {
                         IncreaseScore(DataManager.Instance.ScorePerBlock);
+                        DataManager.Instance.ScoreAmount += DataManager.Instance.ScorePerBlock;
                         Destroy(tile.gameObject);    
                     }
                 }
+                checkDestroyed = true;
+
             }
 
         }
@@ -273,6 +286,7 @@ public class GameController : MonoBehaviour
             }
             if (isColumnFull)
             {
+
                 //Debug.Log("Full cột " + x);
 
                 //Xóa cột
@@ -282,9 +296,12 @@ public class GameController : MonoBehaviour
                     if (tile != null && tile.CompareTag("TileShape"))
                     {
                         IncreaseScore(DataManager.Instance.ScorePerBlock);
+                        DataManager.Instance.ScoreAmount += DataManager.Instance.ScorePerBlock;
                         Destroy(tile.gameObject);
                     }
                 }
+                checkDestroyed = true;
+
             }
         }
     }
@@ -305,7 +322,8 @@ public class GameController : MonoBehaviour
             }
         }
         if (isSquareFull)
-        {  
+        {
+
             for (int x = startX; x < startX + 3; x++)
             {
                 for (int y = startY; y < startY + 3; y++)
@@ -314,10 +332,13 @@ public class GameController : MonoBehaviour
                     if (tile != null || tile.CompareTag("TileShape"))
                     {
                         IncreaseScore(DataManager.Instance.ScorePerBlock);
+                        DataManager.Instance.ScoreAmount += DataManager.Instance.ScorePerBlock;
                         Destroy(tile.gameObject);
                     }
                 }
             }
+            checkDestroyed = true;
+
         }
     }
     public void CheckGameOver()

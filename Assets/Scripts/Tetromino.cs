@@ -57,8 +57,10 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             target.z = -1;
             transform.position = target;
             transform.localScale = new Vector3(1, 1, 1);
+            DataManager.Instance.ScoreAmount = 0;
+
         }
- 
+
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -79,7 +81,6 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         {
             tile.GetComponent<Tile>().ResetColor();
         }
-        
         if (!GameController.Instance.GameOver) 
         {
             //Kiểm tra và đặt Tetromino vào lưới grid
@@ -157,6 +158,14 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
                 {
                     GameController.Instance.CheckAndClearSquare(x, y);
                 }
+            }
+            DataManager.Instance.ScoreAmount += transform.childCount;
+
+            if (GameController.Instance.CheckDestroyed)
+            {
+                
+                ScorePopup.Create(transform.position, DataManager.Instance.ScoreAmount);
+                GameController.Instance.CheckDestroyed = false;
             }
         }
         else

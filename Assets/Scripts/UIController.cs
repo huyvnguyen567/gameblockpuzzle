@@ -6,12 +6,13 @@ public class UIController : MonoBehaviour
 {
     public static UIController Instance;
     [SerializeField] private GameObject gamePlayWindowPrefab;
-    [SerializeField] private GameObject gameOverWindowPrefab;
+    [SerializeField] private GameObject gameOverPopupPrefab;
     [SerializeField] private GameObject mainMenuWindowPrefab;
+    public GameObject scorePopupPrefab;
     [SerializeField] private GameObject parentWindow;
     [SerializeField] private GameObject parentPopup;
     private GameObject gamePlayWindow;
-    private GameObject gameOverWindow;
+    private GameObject gameOverPopup;
     private GameObject mainMenuWindow;
 
 
@@ -27,14 +28,13 @@ public class UIController : MonoBehaviour
             Destroy(gameObject);
         }
         SpawnUI();
-
     }
     private void SpawnUI()
     {
         gamePlayWindow = Instantiate(gamePlayWindowPrefab, parentWindow.gameObject.transform);
         gamePlayWindow.transform.SetParent(parentWindow.transform);
-        gameOverWindow = Instantiate(gameOverWindowPrefab, parentPopup.gameObject.transform);
-        gameOverWindow.transform.SetParent(parentPopup.transform);
+        gameOverPopup = Instantiate(gameOverPopupPrefab, parentPopup.gameObject.transform);
+        gameOverPopup.transform.SetParent(parentPopup.transform);
         mainMenuWindow = Instantiate(mainMenuWindowPrefab, parentWindow.gameObject.transform);
         mainMenuWindow.transform.SetParent(parentWindow.transform);
     }
@@ -66,8 +66,10 @@ public class UIController : MonoBehaviour
         switch (type)
         {
             case PopupType.Gameover:
-                gameOverWindow.GetComponent<GameOverPopup>().ActiveGameOverWindow(isActive);
+                gameOverPopup.GetComponent<GameOverPopup>().ActiveGameOverWindow(isActive);
                 break;
+
+                    
         }
     }
     public void UpdatePopup(PopupType type)
@@ -75,8 +77,9 @@ public class UIController : MonoBehaviour
         switch (type)
         {
             case PopupType.Gameover:
-                gameOverWindow.GetComponent<GameOverPopup>().UpdateScoreText();
+                gameOverPopup.GetComponent<GameOverPopup>().UpdateScoreText();
                 break;
+ 
         }
     }
 }
@@ -86,5 +89,5 @@ public enum WindowType
 }
 public enum PopupType
 {
-    Gameover
+    Gameover, Score
 }

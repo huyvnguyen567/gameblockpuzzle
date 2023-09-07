@@ -8,6 +8,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] private int score = 0;
     [SerializeField] private int scorePerBlock = 2;
     [SerializeField] private int highScore = 0;
+    [SerializeField] private int scoreAmount = 0;
 
     public int Score
     {
@@ -32,6 +33,14 @@ public class DataManager : MonoBehaviour
         set
         {
             highScore = value;
+        }
+    }
+    public int ScoreAmount
+    {
+        get { return scoreAmount; }
+        set
+        {
+            scoreAmount = value;
         }
     }
 
