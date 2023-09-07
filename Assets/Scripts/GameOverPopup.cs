@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameOverPopup : MonoBehaviour
 {
@@ -24,7 +24,12 @@ public class GameOverPopup : MonoBehaviour
     }
     public void UpdateScoreText()
     {
-        scoreText.text = "Score: " +DataManager.Instance.Score;
+        scoreText.text = "Score: " + DataManager.Instance.Score;
     }
-  
+    public void TweenMoveY()
+    {
+        RectTransform rectrans = GetComponent<RectTransform>();
+        rectrans.DOAnchorPosY(-227, 1, false);
+    }
+
 }

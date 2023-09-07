@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private float highlightDistance = 0.2f;
     [SerializeField] private Vector3 offset = new Vector3(0, 3, 0);
     private Vector3 initialPosition;
     private int height;
@@ -86,7 +85,12 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             //Kiểm tra và đặt Tetromino vào lưới grid
             StartCoroutine(SnapAndCheckGameOver());
         }
-            
+        else
+        {
+            transform.localScale = new Vector3(0.6f, 0.6f, 1);
+            transform.position = initialPosition;
+        }
+
     }
 
     public void HighLightColor()
@@ -115,10 +119,6 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
                 tile.GetComponent<Tile>().ResetColor();
             }
         }
-
-       
-
-
     }
 
     public bool CanSnap()
@@ -139,7 +139,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         SnapToValidGridCell();
 
         // Chờ cho tất cả các hàm khác trong SnapToValidGridCell hoàn thành
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         GameController.Instance.CheckGameOver();
     }

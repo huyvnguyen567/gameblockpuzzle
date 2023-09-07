@@ -20,8 +20,6 @@ public class ScorePopup : MonoBehaviour
     {
         textMesh = transform.GetComponent<TextMeshPro>();
     }
-
-
     void Update()
     {
         float moveYSpeed = 2f;

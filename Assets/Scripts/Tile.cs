@@ -11,10 +11,7 @@ public class Tile : MonoBehaviour
     {
         originalColor = GetComponent<SpriteRenderer>().color;
     }
-    private void Update()
-    {
-        
-    }
+
     public void HighlightTile()
     {
         Color newColor = Color.white;

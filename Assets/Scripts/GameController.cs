@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -17,9 +18,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private List<GameObject> tetrominoPrefabs;
     [SerializeField] private LayerMask layerMask;
 
-    //[SerializeField] private TextMeshProUGUI scoreText;
-    //[SerializeField] private int scorePerBlock = 2;
-    //private int score = 0;
+    [SerializeField] private Vector3 scaleTile = new Vector3(0.3f, 0.3f, 1);
+    [SerializeField] private float scaleTileTimer = 0.3f;
+    [SerializeField] private float timeDestroyTile = 0.3f;
+
     private List<GameObject> currentTetrominos = new List<GameObject>();
     private List<Tile> listTiles = new List<Tile>();
     public Transform[,] grid; // Lưới grid lưu trữ thông tin về ô
@@ -251,17 +253,20 @@ public class GameController : MonoBehaviour
             }
             if (isRowFull)
             {
-
+                float offset = 0;
                 //Debug.Log("Full dòng " +y);
                 //Xóa dòng
                 for (int x = 0; x < width; x++)
                 {
+                    offset += 0.03f;
                     Transform tile = grid[x, y];
                     if (tile != null && tile.CompareTag("TileShape"))
                     {
                         IncreaseScore(DataManager.Instance.ScorePerBlock);
                         DataManager.Instance.ScoreAmount += DataManager.Instance.ScorePerBlock;
-                        Destroy(tile.gameObject);    
+                        tile.DOScale(scaleTile + new Vector3(offset, offset, 0), scaleTileTimer);
+                        tile.DORotate(tile.localRotation.eulerAngles + new Vector3(0, 0, -180), scaleTileTimer);
+                        Destroy(tile.gameObject, timeDestroyTile);    
                     }
                 }
                 checkDestroyed = true;
@@ -286,18 +291,22 @@ public class GameController : MonoBehaviour
             }
             if (isColumnFull)
             {
+                float offset = 0;
 
                 //Debug.Log("Full cột " + x);
 
                 //Xóa cột
                 for (int y = 0; y < height; y++)
                 {
+                    offset += 0.03f;
                     Transform tile = grid[x, y];
                     if (tile != null && tile.CompareTag("TileShape"))
                     {
                         IncreaseScore(DataManager.Instance.ScorePerBlock);
                         DataManager.Instance.ScoreAmount += DataManager.Instance.ScorePerBlock;
-                        Destroy(tile.gameObject);
+                        tile.DOScale(scaleTile + new Vector3(offset, offset, 0), scaleTileTimer);
+                        tile.DORotate(tile.localRotation.eulerAngles + new Vector3(0, 0, -180), scaleTileTimer);
+                        Destroy(tile.gameObject, timeDestroyTile);
                     }
                 }
                 checkDestroyed = true;
@@ -323,17 +332,20 @@ public class GameController : MonoBehaviour
         }
         if (isSquareFull)
         {
-
+            float offset = 0;
             for (int x = startX; x < startX + 3; x++)
             {
                 for (int y = startY; y < startY + 3; y++)
                 {
+                    offset += 0.03f;
                     Transform tile = grid[x, y];
                     if (tile != null || tile.CompareTag("TileShape"))
                     {
                         IncreaseScore(DataManager.Instance.ScorePerBlock);
                         DataManager.Instance.ScoreAmount += DataManager.Instance.ScorePerBlock;
-                        Destroy(tile.gameObject);
+                        tile.DOScale(scaleTile + new Vector3(offset,offset,0), scaleTileTimer);
+                        tile.DORotate(tile.localRotation.eulerAngles + new Vector3(0, 0, -180), scaleTileTimer);
+                        Destroy(tile.gameObject, timeDestroyTile);
                     }
                 }
             }
@@ -378,8 +390,7 @@ public class GameController : MonoBehaviour
                         }
                     }
                 }
-            }
-            
+            }    
         }
         if (canAdd)
         {
@@ -390,6 +401,7 @@ public class GameController : MonoBehaviour
             gameOver = true;
             UIController.Instance.UpdatePopup(PopupType.Gameover);
             UIController.Instance.ShowPopup(PopupType.Gameover, true);
+
             Debug.Log("Thua! Không thể đặt tetromino nào vào grid.");
         }
 

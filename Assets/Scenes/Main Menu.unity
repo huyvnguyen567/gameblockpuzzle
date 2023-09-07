@@ -155,6 +155,7 @@ MonoBehaviour:
   score: 0
   scorePerBlock: 2
   highScore: 0
+  scoreAmount: 0
 --- !u!4 &497101488
 Transform:
   m_ObjectHideFlags: 0
@@ -302,7 +303,7 @@ GameObject:
   m_Layer: 5
   m_Name: Popup
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -443,8 +444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePlayWindowPrefab: {fileID: 7725267236516471813, guid: 06d2cf63370402545a4d7bebea07d52c, type: 3}
-  gameOverWindowPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
+  gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
   mainMenuWindowPrefab: {fileID: 7496687702096535879, guid: 4a49004f51064814783801af20e4ded1, type: 3}
+  scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
   parentWindow: {fileID: 717422424}
   parentPopup: {fileID: 1544829542}
 --- !u!114 &2015008339

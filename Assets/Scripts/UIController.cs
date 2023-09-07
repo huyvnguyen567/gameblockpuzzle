@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class UIController : MonoBehaviour
 {
@@ -32,11 +33,8 @@ public class UIController : MonoBehaviour
     private void SpawnUI()
     {
         gamePlayWindow = Instantiate(gamePlayWindowPrefab, parentWindow.gameObject.transform);
-        gamePlayWindow.transform.SetParent(parentWindow.transform);
         gameOverPopup = Instantiate(gameOverPopupPrefab, parentPopup.gameObject.transform);
-        gameOverPopup.transform.SetParent(parentPopup.transform);
         mainMenuWindow = Instantiate(mainMenuWindowPrefab, parentWindow.gameObject.transform);
-        mainMenuWindow.transform.SetParent(parentWindow.transform);
     }
 
     public void ShowWindow(WindowType type, bool isActive)
@@ -67,9 +65,9 @@ public class UIController : MonoBehaviour
         {
             case PopupType.Gameover:
                 gameOverPopup.GetComponent<GameOverPopup>().ActiveGameOverWindow(isActive);
+                gameOverPopup.GetComponent<GameOverPopup>().TweenMoveY();
                 break;
-
-                    
+     
         }
     }
     public void UpdatePopup(PopupType type)
