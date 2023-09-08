@@ -27,7 +27,7 @@ public class ScorePopup : MonoBehaviour
         disappearTimer -= Time.deltaTime;
         if (disappearTimer < 0)
         {
-            float disappearSpeed = 0.5f;
+            float disappearSpeed = 0.45f;
             textColor.a -= disappearSpeed * Time.deltaTime;
             textMesh.color = textColor;
             if (textColor.a < 0)

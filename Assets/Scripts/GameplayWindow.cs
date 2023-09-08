@@ -8,7 +8,10 @@ public class GameplayWindow : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI highScoreText;
-
+    private void Awake()
+    {
+        SoundManager.Instance.PlayMusic(MusicType.GamePlay);
+    }
     public void ActiveGamePlayWindow(bool isActive)
     {
         gameObject.SetActive(isActive);

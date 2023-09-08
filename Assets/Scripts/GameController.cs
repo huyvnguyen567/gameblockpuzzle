@@ -224,19 +224,6 @@ public class GameController : MonoBehaviour
         return true;
     }
 
-    //public bool CanTetrominoSnap(Transform tetromino)
-    //{
-    //    foreach (Transform tile in transform)
-    //    {
-    //        var origin = tile.position;
-    //        RaycastHit2D hit = Physics2D.Raycast(origin, transform.forward, 10, layerMask);
-    //        if (hit.collider == null || !IsGridCellEmpty(tile.position))
-    //        {
-    //            return false;
-    //        }
-    //    }
-    //    return true;
-    //}
     public void CheckAndClearFullRows()
     {
         for (int y = 0; y < height; y++)
@@ -272,7 +259,6 @@ public class GameController : MonoBehaviour
                 checkDestroyed = true;
 
             }
-
         }
     }
     public void CheckAndClearFullColumns()

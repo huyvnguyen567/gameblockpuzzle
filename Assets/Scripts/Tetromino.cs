@@ -42,11 +42,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         //Debug.Log(width + " " + height + " " + name);
 
     }
-    private void Start()
-    {
-        
-    }
-    
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver)
@@ -57,7 +53,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             transform.position = target;
             transform.localScale = new Vector3(1, 1, 1);
             DataManager.Instance.ScoreAmount = 0;
-
+            SoundManager.Instance.PlaySfx(SfxType.TetrominoClick);
         }
 
     }
@@ -67,10 +63,9 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         {
             var target = Camera.main.ScreenToWorldPoint(eventData.position);
             target += offset;
-            target.z = -1;
+            target.z = -2;
             transform.position = target;
             HighLightColor();
-
         }
     }
 
@@ -90,7 +85,6 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             transform.localScale = new Vector3(0.6f, 0.6f, 1);
             transform.position = initialPosition;
         }
-
     }
 
     public void HighLightColor()
@@ -147,6 +141,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     {  
         if (CanSnap())
         {
+            SoundManager.Instance.PlaySfx(SfxType.OnBoard);
             GameController.Instance.IncreaseScore(transform.childCount);
             GameController.Instance.SnapTetrominoToGrid(transform);
             GameController.Instance.TetrominoUsed(transform.gameObject);
@@ -163,7 +158,6 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
             if (GameController.Instance.CheckDestroyed)
             {
-                
                 ScorePopup.Create(transform.position, DataManager.Instance.ScoreAmount);
                 GameController.Instance.CheckDestroyed = false;
             }

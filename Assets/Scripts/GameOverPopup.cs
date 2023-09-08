@@ -21,6 +21,8 @@ public class GameOverPopup : MonoBehaviour
     public void ActiveGameOverWindow(bool isActive)
     {
         gameObject.SetActive(isActive);
+        if(isActive)
+            SoundManager.Instance.PlaySfx(SfxType.GameOver);
     }
     public void UpdateScoreText()
     {

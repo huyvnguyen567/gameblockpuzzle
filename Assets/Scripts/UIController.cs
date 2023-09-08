@@ -16,7 +16,6 @@ public class UIController : MonoBehaviour
     private GameObject gameOverPopup;
     private GameObject mainMenuWindow;
 
-
     private void Awake()
     {
         if(Instance == null)
@@ -30,6 +29,8 @@ public class UIController : MonoBehaviour
         }
         SpawnUI();
     }
+
+   
     private void SpawnUI()
     {
         gamePlayWindow = Instantiate(gamePlayWindowPrefab, parentWindow.gameObject.transform);
@@ -65,7 +66,7 @@ public class UIController : MonoBehaviour
         {
             case PopupType.Gameover:
                 gameOverPopup.GetComponent<GameOverPopup>().ActiveGameOverWindow(isActive);
-                gameOverPopup.GetComponent<GameOverPopup>().TweenMoveY();
+                TweenManagerUI.Instance.MoveYPopup(gameOverPopup.gameObject.GetComponent<RectTransform>());
                 break;
      
         }
@@ -80,6 +81,7 @@ public class UIController : MonoBehaviour
  
         }
     }
+   
 }
 public enum WindowType
 {

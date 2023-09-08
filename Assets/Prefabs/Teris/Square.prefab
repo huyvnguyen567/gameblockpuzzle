@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1904332043234810348}
   - component: {fileID: 1904332043234810349}
   - component: {fileID: 1904332043234810354}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Tile
   m_TagString: TileShape
   m_Icon: {fileID: 0}
@@ -175,7 +175,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  highlightDistance: 0.2
   offset: {x: 0, y: 3, z: 0}
 --- !u!61 &6551633350950752839
 BoxCollider2D:

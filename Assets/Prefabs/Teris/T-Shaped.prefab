@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: T-Shaped
   m_TagString: Untagged
-  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -52,7 +52,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  highlightDistance: 0.2
   offset: {x: 0, y: 3, z: 0}
 --- !u!61 &8434825006689565390
 BoxCollider2D:
@@ -137,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_TagString
@@ -267,7 +266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_TagString
@@ -397,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_TagString
@@ -527,7 +526,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
       propertyPath: m_TagString
