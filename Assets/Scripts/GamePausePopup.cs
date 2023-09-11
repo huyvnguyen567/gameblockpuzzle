@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
 
-public class GameOverPopup : MonoBehaviour
+public class GamePausePopup : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
@@ -17,16 +15,17 @@ public class GameOverPopup : MonoBehaviour
     {
         GameController.Instance.LoadMainMenu();
     }
-
-    public void ActiveGameOverPopup(bool isActive)
+    public void OnClosePopup()
+    {
+        UIController.Instance.ShowPopup(PopupType.GamePause, false);
+        GameController.Instance.GamePause = false;
+    }
+    public void ActiveGamePausePopup(bool isActive)
     {
         gameObject.SetActive(isActive);
-        if(isActive)
-            SoundManager.Instance.PlaySfx(SfxType.GameOver);
     }
     public void UpdateScoreText()
     {
         scoreText.text = "Score: " + DataManager.Instance.Score;
     }
-
 }

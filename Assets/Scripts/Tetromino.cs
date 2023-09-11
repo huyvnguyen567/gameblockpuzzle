@@ -45,7 +45,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver)
+        if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver && !GameController.Instance.GamePause)
         {
             var target = Camera.main.ScreenToWorldPoint(eventData.position);
             target += offset;
@@ -59,7 +59,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     }
     public void OnDrag(PointerEventData eventData)
     {
-        if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver)
+        if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver && !GameController.Instance.GamePause)
         {
             var target = Camera.main.ScreenToWorldPoint(eventData.position);
             target += offset;
@@ -75,7 +75,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         {
             tile.GetComponent<Tile>().ResetColor();
         }
-        if (!GameController.Instance.GameOver) 
+        if (!GameController.Instance.GameOver && !GameController.Instance.GamePause) 
         {
             //Kiểm tra và đặt Tetromino vào lưới grid
             StartCoroutine(SnapAndCheckGameOver());

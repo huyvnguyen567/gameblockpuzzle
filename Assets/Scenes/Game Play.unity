@@ -726,9 +726,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7af009a2cc13e43a4132ebef2fb3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePlayWindowPrefab: {fileID: 7725267236516471813, guid: 06d2cf63370402545a4d7bebea07d52c, type: 3}
-  gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
-  mainMenuWindowPrefab: {fileID: 7496687702096535879, guid: 4a49004f51064814783801af20e4ded1, type: 3}
-  scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
   parentWindow: {fileID: 1587155789}
   parentPopup: {fileID: 953310003}
+  gamePlayWindowPrefab: {fileID: 7725267236516471813, guid: 06d2cf63370402545a4d7bebea07d52c, type: 3}
+  mainMenuWindowPrefab: {fileID: 7496687702096535879, guid: 4a49004f51064814783801af20e4ded1, type: 3}
+  gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
+  scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
+  gamePausePopupPrefab: {fileID: 4116137464039247445, guid: 842bed10ca2c36a49b97e1f589a317eb, type: 3}

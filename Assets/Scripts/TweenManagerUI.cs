@@ -26,7 +26,7 @@ public class TweenManagerUI : MonoBehaviour
 
     public void MoveYPopup(RectTransform rectTransform)
     {
-        rectTransform.DOAnchorPosY(-227, duration, false);
+        rectTransform.DOAnchorPosY(-800, duration, false);
     }
 
 }

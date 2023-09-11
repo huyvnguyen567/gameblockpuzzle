@@ -26,7 +26,8 @@ public class GameController : MonoBehaviour
     private List<Tile> listTiles = new List<Tile>();
     public Transform[,] grid; // Lưới grid lưu trữ thông tin về ô
     private bool gameOver = false;
-    [SerializeField] private bool checkDestroyed = false;
+    private bool gamePause = false;
+    private bool checkDestroyed = false;
     public bool CheckDestroyed
     {
         get { return checkDestroyed; }
@@ -41,6 +42,14 @@ public class GameController : MonoBehaviour
         set
         {
             gameOver = value;
+        }
+    }
+    public bool GamePause
+    {
+        get { return gamePause; }
+        set
+        {
+            gamePause = value;
         }
     }
 
@@ -67,9 +76,9 @@ public class GameController : MonoBehaviour
         // Sinh ngẫu nhiên các khối tetromino
         SpawnInitialTetrominos();
         DataManager.Instance.Score = 0;
-        UIController.Instance.ShowWindow(WindowType.Mainmenu, false);
-        UIController.Instance.UpdateWindow(WindowType.Gameplay);
-        UIController.Instance.ShowWindow(WindowType.Gameplay, true);
+        UIController.Instance.ShowWindow(WindowType.MainMenu, false);
+        UIController.Instance.UpdateWindow(WindowType.GamePlay);
+        UIController.Instance.ShowWindow(WindowType.GamePlay, true);
     }
 
     private void Update()
@@ -91,7 +100,7 @@ public class GameController : MonoBehaviour
             DataManager.Instance.HighScore = DataManager.Instance.Score;
             PlayerPrefs.SetInt("HighScore", DataManager.Instance.HighScore);
         }
-        UIController.Instance.UpdateWindow(WindowType.Gameplay);
+        UIController.Instance.UpdateWindow(WindowType.GamePlay);
     }
     private void InitializeGrid()
     {
@@ -360,10 +369,8 @@ public class GameController : MonoBehaviour
                             if ((x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1)))
                             {
                                 Transform gridCell = grid[x, y];
-                                //Debug.Log(x + " " + y + " " + tetromino.name);
                                 if (gridCell != null && gridCell.CompareTag("TileShape"))
                                 {
-                                    //Debug.Log("x: " + x + " y: " + y + /*" name: " +gridCell.name +*/ "tag: " + gridCell.CompareTag("TileShape"));
                                     isEmpty = false;
                                     break;
                                 }
@@ -385,8 +392,8 @@ public class GameController : MonoBehaviour
         else
         {
             gameOver = true;
-            UIController.Instance.UpdatePopup(PopupType.Gameover);
-            UIController.Instance.ShowPopup(PopupType.Gameover, true);
+            UIController.Instance.UpdatePopup(PopupType.GameOver);
+            UIController.Instance.ShowPopup(PopupType.GameOver, true);
 
             Debug.Log("Thua! Không thể đặt tetromino nào vào grid.");
         }

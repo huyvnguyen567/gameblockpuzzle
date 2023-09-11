@@ -453,7 +453,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11.3
+  orthographic size: 9.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -800,12 +800,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7af009a2cc13e43a4132ebef2fb3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePlayWindowPrefab: {fileID: 7725267236516471813, guid: 06d2cf63370402545a4d7bebea07d52c, type: 3}
-  gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
-  mainMenuWindowPrefab: {fileID: 7496687702096535879, guid: 4a49004f51064814783801af20e4ded1, type: 3}
-  scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
   parentWindow: {fileID: 717422424}
   parentPopup: {fileID: 1544829542}
+  gamePlayWindowPrefab: {fileID: 7725267236516471813, guid: 06d2cf63370402545a4d7bebea07d52c, type: 3}
+  mainMenuWindowPrefab: {fileID: 7496687702096535879, guid: 4a49004f51064814783801af20e4ded1, type: 3}
+  gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
+  scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
+  gamePausePopupPrefab: {fileID: 4116137464039247445, guid: 842bed10ca2c36a49b97e1f589a317eb, type: 3}
 --- !u!114 &2015008339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,12 +836,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

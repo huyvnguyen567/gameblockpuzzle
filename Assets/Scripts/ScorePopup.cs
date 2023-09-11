@@ -39,7 +39,18 @@ public class ScorePopup : MonoBehaviour
     public void Setup(int scoreAmount)
     {
         textColor = textMesh.color;
-        textMesh.text = "+" + scoreAmount;
+        if (scoreAmount > 54)
+        {
+            textMesh.text = "AMAZING!" + "\n\n+" + scoreAmount;
+        }
+        else if (scoreAmount > 36)
+        {
+            textMesh.text = "GREAT!" + "\n\n+" + scoreAmount;
+        }
+        else
+        {
+            textMesh.text = "+" + scoreAmount;
+        }
     }
   
 }
