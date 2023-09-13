@@ -8,6 +8,8 @@ using DG.Tweening;
 public class GameOverPopup : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
+    public Image blurImage;
+    public RectTransform popup;
 
     public void OnReplayClick()
     {
@@ -21,8 +23,13 @@ public class GameOverPopup : MonoBehaviour
     public void ActiveGameOverPopup(bool isActive)
     {
         gameObject.SetActive(isActive);
-        if(isActive)
+        if (isActive)
+        {
             SoundManager.Instance.PlaySfx(SfxType.GameOver);
+            TweenManagerUI.Instance.MoveYPopup(popup);
+            TweenManagerUI.Instance.FadeUI(blurImage);
+        }
+            
     }
     public void UpdateScoreText()
     {

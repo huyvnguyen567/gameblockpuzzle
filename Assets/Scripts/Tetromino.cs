@@ -14,6 +14,12 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     public int Height => height;
     public int Width => width;
 
+    private float offsetScreen_x = 1f;
+    private float offsetScreen_y = 2;
+
+    private Camera mainCamera;
+    private float xMax, xMin, yMin, yMax;
+
     private void Awake()
     {
         initialPosition = transform.position;
@@ -43,6 +49,34 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
     }
 
+    private void Start()
+    {
+        mainCamera = Camera.main;
+        CalculateCameraBounds();
+    }
+    private void Update()
+    {
+        // Lấy vị trí hiện tại của Tetromino
+        Vector3 currentPosition = transform.position;
+
+        // Kiểm tra giới hạn và ngăn Tetromino ra khỏi giới hạn
+        currentPosition.x = Mathf.Clamp(currentPosition.x, xMin + mainCamera.transform.position.x, xMax + mainCamera.transform.position.x - offsetScreen_x);
+        currentPosition.y = Mathf.Clamp(currentPosition.y, yMin + mainCamera.transform.position.y, yMax + mainCamera.transform.position.x - offsetScreen_y);
+
+        // Cập nhật vị trí của Tetromino
+        transform.position = currentPosition;
+    }
+    private void CalculateCameraBounds()
+    {
+        float orthographicSize = mainCamera.orthographicSize;
+        float aspect = mainCamera.aspect;
+
+        // Tính toán giới hạn của Tetromino
+        xMax = orthographicSize * aspect;
+        xMin = -xMax;
+        yMin = -orthographicSize;
+        yMax = -yMin;
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver && !GameController.Instance.GamePause)
@@ -85,6 +119,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             transform.localScale = new Vector3(0.6f, 0.6f, 1);
             transform.position = initialPosition;
         }
+       
     }
 
     public void HighLightColor()
@@ -166,7 +201,7 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         {
             if (!GameController.Instance.IsPlaced(transform.gameObject))
             {
-                transform.localScale = new Vector3(0.6f, 0.6f, 1);
+                transform.localScale = new Vector3(0.4f, 0.4f, 1);
                 transform.position = initialPosition;
             }
         } 

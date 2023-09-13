@@ -80,17 +80,10 @@ public class GameController : MonoBehaviour
         UIController.Instance.UpdateWindow(WindowType.GamePlay);
         UIController.Instance.ShowWindow(WindowType.GamePlay, true);
     }
-
-    private void Update()
-    {
-       
-    }
     private void SpawnGridContainAndSpawnPoints()
     {
         gridContainer = Instantiate(gridContainPrefab.transform);
         spawnPoints = Instantiate(spawnPointsPrefab.transform);
-     
-
     }
     public void IncreaseScore(int amount)
     {
@@ -209,8 +202,17 @@ public class GameController : MonoBehaviour
 
     private GameObject GetRandomTetrominoPrefab()
     {
-        int randomIndex = Random.Range(0, tetrominoPrefabs.Count);
-        return tetrominoPrefabs[randomIndex];
+        if(DataManager.Instance.Score < 500)
+        {
+            int randomIndex = Random.Range(0, tetrominoPrefabs.Count - 5);
+            return tetrominoPrefabs[randomIndex];
+        }
+        else
+        {
+            int randomIndex = Random.Range(0, tetrominoPrefabs.Count);
+            return tetrominoPrefabs[randomIndex];
+        }
+        
     }
 
     // Gọi hàm này khi Tetromino đã được drop

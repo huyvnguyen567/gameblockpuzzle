@@ -69,7 +69,6 @@ public class UIController : MonoBehaviour
         {
             case PopupType.GameOver:
                 gameOverPopup.GetComponent<GameOverPopup>().ActiveGameOverPopup(isActive);
-                TweenManagerUI.Instance.MoveYPopup(gameOverPopup.gameObject.GetComponent<RectTransform>());
                 break;
             case PopupType.GamePause:
                 gamePausePopup.GetComponent<GamePausePopup>().ActiveGamePausePopup(isActive);

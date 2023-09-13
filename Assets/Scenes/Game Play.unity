@@ -240,26 +240,50 @@ MonoBehaviour:
   pool: {fileID: 1949347161}
   gridContainPrefab: {fileID: 1257703044336143946, guid: 10baa8ed0b647b449b5b48e417d6ab61, type: 3}
   spawnPointsPrefab: {fileID: 8613931532827449831, guid: f0a4da08492d506439325e40b47f3103, type: 3}
+  spawnReservePointsPrefab: {fileID: 7010913332927976120, guid: 87f3d461cae05ad4da9c8502963aec9f, type: 3}
   tilePrefab: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
   width: 9
   height: 9
   tetrominoPrefabs:
   - {fileID: 964302912914088319, guid: 38342e0e236fb3541b80b934ea43b086, type: 3}
+  - {fileID: 5621408070277275674, guid: 2fad0ff08dcf3154389cab11025a0173, type: 3}
+  - {fileID: 1117916695177388147, guid: 32adef2e0bec102438ed90ad077ec989, type: 3}
+  - {fileID: 4057095416656502838, guid: a4d40c34c2170994f919845b8bd54e86, type: 3}
+  - {fileID: 8066437037279447166, guid: 65838bbe4d1c90d45ae428e2f2452f95, type: 3}
+  - {fileID: 3009841134788791706, guid: 4a1d1bbfd5d276c4181161ad7a8d937a, type: 3}
   - {fileID: 3375638014884770349, guid: 534ee827ce0574643a9653a54cc04079, type: 3}
+  - {fileID: 2724168039769510743, guid: 9f7193747e7e5d143aa2754060a6ff44, type: 3}
+  - {fileID: 303887166630484266, guid: b4d5e688ae927e444bf5d71b7f10dc83, type: 3}
+  - {fileID: 4117523297009856607, guid: 0233e3c97a19a394ebb2636799263273, type: 3}
+  - {fileID: 1016621875445403014, guid: 4f74e7fd0fbe5e643937991371a0527e, type: 3}
+  - {fileID: 4116416241881618097, guid: eab9dc5b7a48e5b4c86cec9114827a1d, type: 3}
   - {fileID: 964302912914088319, guid: de890fc749c565d4b88f0058c082e74d, type: 3}
+  - {fileID: 1494222063085152946, guid: fefe724390ee70645a766bb5e9897491, type: 3}
+  - {fileID: 4146863670017064618, guid: c2614f7c5730cfd4c8e6596a52b368b6, type: 3}
+  - {fileID: 8640787810922703050, guid: fd13c74e17c611046b82a59f483df8b6, type: 3}
   - {fileID: 3375638014884770349, guid: 44b418b4e8a884b4886afdf748609248, type: 3}
+  - {fileID: 8705763943379045862, guid: 09e06911b724cf34aa832af0bab3152f, type: 3}
   - {fileID: 964302912914088319, guid: 5e936b770b4808643a732c642e50a243, type: 3}
-  - {fileID: 6193608578868171855, guid: b4c9cd821a0203f4ca7d091ea29a951e, type: 3}
+  - {fileID: 1434725329432299620, guid: 39205423962d9c2449fbd046444fb784, type: 3}
+  - {fileID: 6193608578868171855, guid: a050ceb3d0d188843a842c1451d51ebd, type: 3}
   - {fileID: 1904332043310525561, guid: 17c95e31f48f7e540b6de488f138190d, type: 3}
+  - {fileID: 8085836639731760830, guid: b71065590b6f0ba43b93074b7c76eefd, type: 3}
   - {fileID: 4561883216598118254, guid: b6ff557530342e1419c3cf5d45045df3, type: 3}
+  - {fileID: 8810247369049428179, guid: 752dfee6cb8d4a848854e82a32d8d8e8, type: 3}
+  - {fileID: 9164678372373571837, guid: 683bba8991c4d6e4f94bfa58373a8020, type: 3}
+  - {fileID: 8957128476026079162, guid: 173373870378fbb418a4b3de37719860, type: 3}
   - {fileID: 964302912914088319, guid: e2ed7d21efa5b5344b5d4865372628b6, type: 3}
+  - {fileID: 8193553683773725080, guid: c36b7f53a30d60f42a8570068513369f, type: 3}
+  - {fileID: 4146291181091387818, guid: 31dc696663b6ceb4e88c87150a15e355, type: 3}
+  - {fileID: 5599649115041616054, guid: a046d80973f54bb4fab7d893848df6ac, type: 3}
+  - {fileID: 8124120773150596705, guid: e271c4a19eb15ae4182d780cc32b97c5, type: 3}
+  - {fileID: 4987855243381283250, guid: 052e13a4cdc703c4ba9f66e00f5b56dc, type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 64
   scaleTile: {x: 0.2, y: 0.2, z: 1}
   scaleTileTimer: 0.7
   timeDestroyTile: 0.72
-  checkDestroyed: 0
 --- !u!4 &298786940
 Transform:
   m_ObjectHideFlags: 0
@@ -329,7 +353,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11.3
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -407,7 +431,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &587767872
 MonoBehaviour:
@@ -609,7 +633,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2110096035
 GameObject:

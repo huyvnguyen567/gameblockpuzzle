@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3375638014884770349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -7, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2418201796045279139}
@@ -53,6 +53,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   offset: {x: 0, y: 3, z: 0}
+  offsetScreen_x: -0.5
+  offsetScreen_y: 2
 --- !u!61 &2435774479536776289
 BoxCollider2D:
   m_ObjectHideFlags: 0
