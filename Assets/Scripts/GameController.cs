@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
+    
     public static GameController Instance;
     public Transform gridContainer; // Container chứa các ô trong lưới grid
     private Transform spawnPoints;
@@ -15,14 +16,16 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject tilePrefab; // Prefab của ô (tile)
     [SerializeField] private int width = 9;
     [SerializeField] private int height = 9;
-    [SerializeField] private List<GameObject> tetrominoPrefabs;
+    public List<GameObject> tetrominoPrefabs;
     [SerializeField] private LayerMask layerMask;
 
     [SerializeField] private Vector3 scaleTile = new Vector3(0.3f, 0.3f, 1);
     [SerializeField] private float scaleTileTimer = 0.3f;
     [SerializeField] private float timeDestroyTile = 0.3f;
 
-    private List<GameObject> currentTetrominos = new List<GameObject>();
+    public List<GameObject> currentTetrominos = new List<GameObject>();
+    public List<Tetromino> tetrominoList = new List<Tetromino>();
+
     private List<Tile> listTiles = new List<Tile>();
     public Transform[,] grid; // Lưới grid lưu trữ thông tin về ô
     private bool gameOver = false;
@@ -74,11 +77,27 @@ public class GameController : MonoBehaviour
         // Khởi tạo lưới grid và các thông tin liên quan
         InitializeGrid();
         // Sinh ngẫu nhiên các khối tetromino
-        SpawnInitialTetrominos();
-        DataManager.Instance.Score = 0;
+       
+
+        //DataManager.Instance.Score = 0;
         UIController.Instance.ShowWindow(WindowType.MainMenu, false);
         UIController.Instance.UpdateWindow(WindowType.GamePlay);
         UIController.Instance.ShowWindow(WindowType.GamePlay, true);
+       
+        if (DataManager.Instance.savedTetrominoList.Count == 0)
+        {
+            SpawnInitialTetrominos();
+        }
+        else
+        {
+         
+
+            foreach (var item in tetrominoList)
+            {
+                currentTetrominos.Add(item.gameObject);
+            }
+
+        }
     }
     private void SpawnGridContainAndSpawnPoints()
     {
@@ -88,7 +107,8 @@ public class GameController : MonoBehaviour
     public void IncreaseScore(int amount)
     {
         DataManager.Instance.Score += amount;
-        if(DataManager.Instance.Score > DataManager.Instance.HighScore)
+        DataManager.Instance.SaveScore(DataManager.Instance.Score);
+        if (DataManager.Instance.Score > DataManager.Instance.HighScore)
         {
             DataManager.Instance.HighScore = DataManager.Instance.Score;
             PlayerPrefs.SetInt("HighScore", DataManager.Instance.HighScore);
@@ -117,6 +137,7 @@ public class GameController : MonoBehaviour
                 grid[x, y] = newTile.transform;
             }
         }
+
         ChangeColorTileGrid(0, 3);
         ChangeColorTileGrid(3, 0);
         ChangeColorTileGrid(6, 3);
@@ -186,17 +207,70 @@ public class GameController : MonoBehaviour
             gridPosition.z = -1;
             PlaceTileInGrid(gridPosition, tile);
             tile.position = gridPosition;
+            DataManager.Instance.savedTileList.Add(tile.position);
+            DataManager.Instance.SaveTile();
         }
     }
     private void SpawnInitialTetrominos()
     {
-        foreach (Transform point in spawnPoints)
+        //List<int> usedIndices = new List<int>(); // Danh sách để theo dõi các prefab đã sử dụng
+        //foreach (Transform point in spawnPoints)
+        //{
+        //    GameObject tetrominoPrefab = GetRandomTetrominoPrefab();
+        //    Transform spawnPosition = point;
+        //    GameObject tetromino = Instantiate(tetrominoPrefab, spawnPosition.position, Quaternion.identity);
+        //    tetromino.transform.SetParent(spawnPosition);
+        //    currentTetrominos.Add(tetromino);
+
+        //    DataManager.TetrominoData tetrominoData = new DataManager.TetrominoData();
+        //    tetrominoData.id = tetromino.GetComponent<Tetromino>().id;
+        //    tetrominoData.name = tetromino.name;
+        //    tetrominoData.position = tetromino.transform.position;
+        //    DataManager.Instance.savedTetrominoList.Add(tetrominoData);
+        //    DataManager.Instance.SaveTetrominoData();
+
+
+        //}
+        List<int> usedIndices = new List<int>(); // Danh sách để theo dõi các prefab đã sử dụng
+
+        // Đảm bảo bạn có ít nhất 3 prefab để chọn
+        if (tetrominoPrefabs.Count < 3)
         {
-            GameObject tetrominoPrefab = GetRandomTetrominoPrefab();
-            Transform spawnPosition = point;
+            Debug.LogWarning("Cần ít nhất 3 prefab tetromino.");
+            return;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            int randomIndex;
+
+            // Lựa chọn một prefab chưa được sử dụng trước đó
+            do
+            {
+                if (DataManager.Instance.Score < 500)
+                {
+                    randomIndex = Random.Range(0, tetrominoPrefabs.Count - 5);
+                }
+                else
+                {
+                    randomIndex = Random.Range(0, tetrominoPrefabs.Count);
+                }
+            } while (usedIndices.Contains(randomIndex));
+
+            usedIndices.Add(randomIndex); // Đánh dấu prefab đã được sử dụng
+
+            GameObject tetrominoPrefab = tetrominoPrefabs[randomIndex];
+            Transform spawnPosition = spawnPoints.GetChild(i);
             GameObject tetromino = Instantiate(tetrominoPrefab, spawnPosition.position, Quaternion.identity);
             tetromino.transform.SetParent(spawnPosition);
             currentTetrominos.Add(tetromino);
+
+            DataManager.TetrominoData tetrominoData = new DataManager.TetrominoData();
+            tetrominoData.id = tetromino.GetComponent<Tetromino>().id;
+            tetrominoData.name = tetromino.name;
+            tetrominoData.position = tetromino.transform.position;
+            DataManager.Instance.savedTetrominoList.Add(tetrominoData);
+            DataManager.Instance.SaveTetrominoData();
         }
     }
 
@@ -219,10 +293,13 @@ public class GameController : MonoBehaviour
     public void TetrominoUsed(GameObject tetromino)
     {
         currentTetrominos.Remove(tetromino);
+        DataManager.Instance.savedTetrominoList.RemoveAll(tetrominoData => tetrominoData.name == tetromino.name );
+        DataManager.Instance.SaveTetrominoData();
         if (currentTetrominos.Count == 0)
         {
             // Sinh ngẫu nhiễn các tetromino mới
             SpawnInitialTetrominos();
+ 
         }
     }
 
@@ -264,7 +341,9 @@ public class GameController : MonoBehaviour
                         DataManager.Instance.ScoreAmount += DataManager.Instance.ScorePerBlock;
                         tile.DOScale(scaleTile + new Vector3(offset, offset, 0), scaleTileTimer);
                         tile.DORotate(tile.localRotation.eulerAngles + new Vector3(0, 0, -180), scaleTileTimer);
-                        Destroy(tile.gameObject, timeDestroyTile);    
+                        Destroy(tile.gameObject, timeDestroyTile);
+                        DataManager.Instance.RemoveTile(tile.GetComponent<Tile>());
+
                     }
                 }
                 checkDestroyed = true;
@@ -304,6 +383,7 @@ public class GameController : MonoBehaviour
                         tile.DOScale(scaleTile + new Vector3(offset, offset, 0), scaleTileTimer);
                         tile.DORotate(tile.localRotation.eulerAngles + new Vector3(0, 0, -180), scaleTileTimer);
                         Destroy(tile.gameObject, timeDestroyTile);
+                        DataManager.Instance.RemoveTile(tile.GetComponent<Tile>());
                     }
                 }
                 checkDestroyed = true;
@@ -343,6 +423,7 @@ public class GameController : MonoBehaviour
                         tile.DOScale(scaleTile + new Vector3(offset,offset,0), scaleTileTimer);
                         tile.DORotate(tile.localRotation.eulerAngles + new Vector3(0, 0, -180), scaleTileTimer);
                         Destroy(tile.gameObject, timeDestroyTile);
+                        DataManager.Instance.RemoveTile(tile.GetComponent<Tile>());
                     }
                 }
             }
@@ -409,7 +490,8 @@ public class GameController : MonoBehaviour
     {
         SceneManager.LoadScene("Main Menu");
     }
-   
+  
+
 }
 
 

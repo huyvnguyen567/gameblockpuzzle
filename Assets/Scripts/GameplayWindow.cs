@@ -13,13 +13,20 @@ public class GameplayWindow : MonoBehaviour
     {
         SoundManager.Instance.PlayMusic(MusicType.GamePlay);
     }
+    private void OnEnable()
+    {
+        DataManager.Instance.LoadScore();
+        DataManager.Instance.LoadTile();
+        DataManager.Instance.LoadTetrominoData();
+    }
     public void ActiveGamePlayWindow(bool isActive)
     {
         gameObject.SetActive(isActive);
     }
     public void UpdateScoreText()
     {
-        scoreText.text = "Score: " +DataManager.Instance.Score;
+        DataManager.Instance.LoadScore();
+        scoreText.text = "Score: " + DataManager.Instance.Score;
         highScoreText.text = "High Score: " +DataManager.Instance.HighScore;
     }
     public void OnClickPause()

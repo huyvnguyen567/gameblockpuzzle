@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +14,7 @@ public class MainMenuWindow : MonoBehaviour
     }
     private void Start()
     {
-        foreach(RectTransform scaleTransform in scaleTransforms)
+        foreach (RectTransform scaleTransform in scaleTransforms)
         {
             TweenManagerUI.Instance.OnScaleButton(scaleTransform);
         }
@@ -21,7 +22,24 @@ public class MainMenuWindow : MonoBehaviour
     public void OnStartClick()
     {
         SoundManager.Instance.PlaySfx(SfxType.ButtonClick);
-        SceneManager.LoadScene("Game Play");
+        if (PlayerPrefs.HasKey("tile_data"))
+        {
+            string loadedJson = PlayerPrefs.GetString("tile_data");
+            DataManager.Instance.savedTileList = JsonHelper.FromJson<Vector3>(loadedJson);
+            if (DataManager.Instance.savedTileList.Count == 0)
+            {
+                SceneManager.LoadScene("Game Play");
+            }
+            else
+            {
+                UIController.Instance.ShowPopup(PopupType.PlayOption, true);
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Game Play");
+        }
+        
     }
     public void OnQuitClick()
     {
@@ -34,3 +52,4 @@ public class MainMenuWindow : MonoBehaviour
         gameObject.SetActive(isActive);
     }
 }
+

@@ -11,12 +11,22 @@ public class GameOverPopup : MonoBehaviour
     public Image blurImage;
     public RectTransform popup;
 
+    private void OnEnable()
+    {
+      
+    }
     public void OnReplayClick()
     {
+        DataManager.Instance.ResetScore();
+        DataManager.Instance.ResetTile();
+        DataManager.Instance.ResetTetrominoData();
         GameController.Instance.ReplayGame();
     }
     public void OnMainMenuClick()
     {
+        DataManager.Instance.ResetScore();
+        DataManager.Instance.ResetTile();
+        DataManager.Instance.ResetTetrominoData();
         GameController.Instance.LoadMainMenu();
     }
 

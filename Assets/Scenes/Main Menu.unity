@@ -332,6 +332,43 @@ MonoBehaviour:
   scorePerBlock: 2
   highScore: 0
   scoreAmount: 0
+  tetrominoPrefab:
+  - {fileID: 2574168376656456967, guid: 38342e0e236fb3541b80b934ea43b086, type: 3}
+  - {fileID: 6979431776441379938, guid: 2fad0ff08dcf3154389cab11025a0173, type: 3}
+  - {fileID: 2403532058988014603, guid: 32adef2e0bec102438ed90ad077ec989, type: 3}
+  - {fileID: 1627240009844501582, guid: a4d40c34c2170994f919845b8bd54e86, type: 3}
+  - {fileID: 4695303175570195462, guid: 65838bbe4d1c90d45ae428e2f2452f95, type: 3}
+  - {fileID: 512766539033297378, guid: 4a1d1bbfd5d276c4181161ad7a8d937a, type: 3}
+  - {fileID: 1497005653, guid: 534ee827ce0574643a9653a54cc04079, type: 3}
+  - {fileID: 798998083115917103, guid: 9f7193747e7e5d143aa2754060a6ff44, type: 3}
+  - {fileID: 3093747713711789394, guid: b4d5e688ae927e444bf5d71b7f10dc83, type: 3}
+  - {fileID: 1728482291175554087, guid: 0233e3c97a19a394ebb2636799263273, type: 3}
+  - {fileID: 2360845900058198526, guid: 4f74e7fd0fbe5e643937991371a0527e, type: 3}
+  - {fileID: 1727374689400527561, guid: eab9dc5b7a48e5b4c86cec9114827a1d, type: 3}
+  - {fileID: 2574168376656456967, guid: de890fc749c565d4b88f0058c082e74d, type: 3}
+  - {fileID: 4207531860714415818, guid: fefe724390ee70645a766bb5e9897491, type: 3}
+  - {fileID: 1681023994078065362, guid: c2614f7c5730cfd4c8e6596a52b368b6, type: 3}
+  - {fileID: 6427360526328276146, guid: fd13c74e17c611046b82a59f483df8b6, type: 3}
+  - {fileID: 1497005653, guid: 44b418b4e8a884b4886afdf748609248, type: 3}
+  - {fileID: 6199691753985638814, guid: 09e06911b724cf34aa832af0bab3152f, type: 3}
+  - {fileID: 2574168376656456967, guid: 5e936b770b4808643a732c642e50a243, type: 3}
+  - {fileID: 4409455001033360412, guid: 39205423962d9c2449fbd046444fb784, type: 3}
+  - {fileID: 8875665555211114551, guid: a050ceb3d0d188843a842c1451d51ebd, type: 3}
+  - {fileID: 1904332043310525560, guid: 17c95e31f48f7e540b6de488f138190d, type: 3}
+  - {fileID: 5726811847800189150, guid: b71065590b6f0ba43b93074b7c76eefd, type: 3}
+  - {fileID: 1284104462, guid: b6ff557530342e1419c3cf5d45045df3, type: 3}
+  - {fileID: 6097000532268440747, guid: 752dfee6cb8d4a848854e82a32d8d8e8, type: 3}
+  - {fileID: 5906425349019837573, guid: 683bba8991c4d6e4f94bfa58373a8020, type: 3}
+  - {fileID: 5951137504876465090, guid: 173373870378fbb418a4b3de37719860, type: 3}
+  - {fileID: 2574168376656456967, guid: e2ed7d21efa5b5344b5d4865372628b6, type: 3}
+  - {fileID: 6876421903835567584, guid: c36b7f53a30d60f42a8570068513369f, type: 3}
+  - {fileID: 1680468556374996434, guid: 31dc696663b6ceb4e88c87150a15e355, type: 3}
+  - {fileID: 7164487930622926030, guid: a046d80973f54bb4fab7d893848df6ac, type: 3}
+  - {fileID: 5760592456218251265, guid: e271c4a19eb15ae4182d780cc32b97c5, type: 3}
+  - {fileID: 8824657746162079698, guid: 052e13a4cdc703c4ba9f66e00f5b56dc, type: 3}
+  tilePrefab: {fileID: 8197012439461518829, guid: 48edac145c532fe40abb3f875bf11b60, type: 3}
+  savedTileList: []
+  savedTetrominoList: []
 --- !u!4 &497101488
 Transform:
   m_ObjectHideFlags: 0
@@ -456,7 +493,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 11
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -810,6 +847,7 @@ MonoBehaviour:
   gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
   scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
   gamePausePopupPrefab: {fileID: 4116137464039247445, guid: 842bed10ca2c36a49b97e1f589a317eb, type: 3}
+  playOptionPopupPrefab: {fileID: 4954141563248308190, guid: f8848f5bd06d1a645a74e8d4f2652296, type: 3}
 --- !u!114 &2015008339
 MonoBehaviour:
   m_ObjectHideFlags: 0

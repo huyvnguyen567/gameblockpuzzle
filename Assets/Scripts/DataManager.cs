@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,11 @@ public class DataManager : MonoBehaviour
     [SerializeField] private int scorePerBlock = 2;
     [SerializeField] private int highScore = 0;
     [SerializeField] private int scoreAmount = 0;
+    public List<global::Tetromino> tetrominoPrefab;
+    public Tile tilePrefab;
+    public List<Vector3> savedTileList = new List<Vector3>();
+    public List<TetrominoData> savedTetrominoList = new List<TetrominoData>();
+
 
     public int Score
     {
@@ -60,5 +65,101 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+    }
+
+    public void SaveScore(int score)
+    {
+        PlayerPrefs.SetInt("score_data", score);
+        PlayerPrefs.Save();
+    }
+
+    public void ResetScore()
+    {
+        PlayerPrefs.DeleteKey("score_data");
+        PlayerPrefs.Save();
+    }
+    public void LoadScore()
+    {
+        score = PlayerPrefs.GetInt("score_data", 0); 
+    }
+
+    public void SaveTile()
+    {
+        string json = JsonHelper.ToJson(savedTileList, true);
+        PlayerPrefs.SetString("tile_data", json);
+    }
+
+    public void RemoveTile(Tile tile)
+    {
+        savedTileList.Remove(tile.transform.position);
+        SaveTile();
+    }
+
+    public void ResetTile()
+    {
+        if (savedTileList != null)
+        {
+            savedTileList.Clear();
+            SaveTile();
+        }
+    
+    }
+    public void LoadTile()
+    {
+        string loadedJson = PlayerPrefs.GetString("tile_data");
+        savedTileList = JsonHelper.FromJson<Vector3>(loadedJson);
+        foreach(var tile in savedTileList)
+        {
+            if(tile != null)
+            {
+                //Debug.Log("position: " + tile);
+                Tile tileObject = Instantiate(tilePrefab, tile, Quaternion.identity);
+                GameController.Instance.grid[(int)tile.x, (int)tile.y] = tileObject.transform;
+            }
+         
+        }
+
+    }
+
+    [System.Serializable]
+    public class TetrominoData
+    {
+        public int id;
+        public string name;
+        public Vector3 position;
+    }
+    // Hàm để lưu trạng thái TetrominoData vào một tệp JSON
+    public void SaveTetrominoData()
+    {
+        string jsonData = JsonHelper.ToJson(savedTetrominoList,true);
+        //System.IO.File.WriteAllText("tetromino_data.json", jsonData);
+        PlayerPrefs.SetString("tetromino_data", jsonData);
+
+    }
+
+    public void ResetTetrominoData()
+    {
+        if (savedTetrominoList != null)
+        {
+            savedTetrominoList.Clear();
+            SaveTetrominoData();
+        } 
+    }
+    // Hàm để tải dữ liệu từ tệp JSON và cập nhật tetrominoDataList
+    public void LoadTetrominoData()
+{
+        string jsonData = PlayerPrefs.GetString("tetromino_data");
+        savedTetrominoList = JsonHelper.FromJson<TetrominoData>(jsonData);
+        foreach(var tetromino in savedTetrominoList)
+        {
+            foreach(var item in tetrominoPrefab)
+            {
+                if (tetromino.id == item.id)
+                {
+                    Tetromino prefab = Instantiate(item, tetromino.position, Quaternion.identity);
+                    GameController.Instance.tetrominoList.Add(prefab);
+                }
+            }
+        }
     }
 }

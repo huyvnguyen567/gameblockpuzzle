@@ -13,10 +13,12 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject gameOverPopupPrefab;
     public GameObject scorePopupPrefab;
     [SerializeField] private GameObject gamePausePopupPrefab;
+    [SerializeField] private GameObject playOptionPopupPrefab;
     private GameObject gamePlayWindow;
     private GameObject mainMenuWindow;
     private GameObject gameOverPopup;
     private GameObject gamePausePopup;
+    private GameObject playOptionPopup;
 
 
     private void Awake()
@@ -29,7 +31,9 @@ public class UIController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
         SpawnUI();
+        
     }
 
    
@@ -39,6 +43,7 @@ public class UIController : MonoBehaviour
         mainMenuWindow = Instantiate(mainMenuWindowPrefab, parentWindow.gameObject.transform);
         gameOverPopup = Instantiate(gameOverPopupPrefab, parentPopup.gameObject.transform);
         gamePausePopup = Instantiate(gamePausePopupPrefab, parentPopup.gameObject.transform);
+        playOptionPopup = Instantiate(playOptionPopupPrefab, parentPopup.gameObject.transform);
     }
 
     public void ShowWindow(WindowType type, bool isActive)
@@ -73,6 +78,9 @@ public class UIController : MonoBehaviour
             case PopupType.GamePause:
                 gamePausePopup.GetComponent<GamePausePopup>().ActiveGamePausePopup(isActive);
                 break;
+            case PopupType.PlayOption:
+                playOptionPopup.GetComponent<PlayOptionPopup>().ActivePopup(isActive);
+                break;
 
         }
     }
@@ -96,5 +104,5 @@ public enum WindowType
 }
 public enum PopupType
 {
-    GameOver, Score, GamePause
+    GameOver, Score, GamePause, PlayOption
 }

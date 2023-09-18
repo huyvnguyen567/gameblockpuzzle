@@ -50,8 +50,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   offset: {x: 0, y: 3, z: 0}
-  offsetScreen_x: -0.5
-  offsetScreen_y: 2
+  id: 21
 --- !u!61 &6551633350950752839
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -76,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3453722, y: 1.225551}
+  m_Size: {x: 3.5, y: 3.5}
   m_EdgeRadius: 0
 --- !u!1001 &4651848752465268176
 PrefabInstance:

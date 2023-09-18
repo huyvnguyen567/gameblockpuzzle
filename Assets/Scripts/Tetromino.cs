@@ -11,10 +11,11 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     private Vector3 initialPosition;
     private int height;
     private int width;
+    public int id;
     public int Height => height;
     public int Width => width;
 
-    private float offsetScreen_x = 1f;
+    private float offsetScreen_x = 0.5f;
     private float offsetScreen_y = 2;
 
     private Camera mainCamera;
@@ -180,6 +181,8 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             GameController.Instance.IncreaseScore(transform.childCount);
             GameController.Instance.SnapTetrominoToGrid(transform);
             GameController.Instance.TetrominoUsed(transform.gameObject);
+  
+
             GameController.Instance.CheckAndClearFullColumns();
             GameController.Instance.CheckAndClearFullRows();
             for (int x = 0; x < GameController.Instance.Width; x += 3)

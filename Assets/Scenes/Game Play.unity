@@ -240,7 +240,6 @@ MonoBehaviour:
   pool: {fileID: 1949347161}
   gridContainPrefab: {fileID: 1257703044336143946, guid: 10baa8ed0b647b449b5b48e417d6ab61, type: 3}
   spawnPointsPrefab: {fileID: 8613931532827449831, guid: f0a4da08492d506439325e40b47f3103, type: 3}
-  spawnReservePointsPrefab: {fileID: 7010913332927976120, guid: 87f3d461cae05ad4da9c8502963aec9f, type: 3}
   tilePrefab: {fileID: 2659834471951147396, guid: 0b02958115e766946aa8f9acc9125475, type: 3}
   width: 9
   height: 9
@@ -284,6 +283,8 @@ MonoBehaviour:
   scaleTile: {x: 0.2, y: 0.2, z: 1}
   scaleTileTimer: 0.7
   timeDestroyTile: 0.72
+  currentTetrominos: []
+  tetrominoList: []
 --- !u!4 &298786940
 Transform:
   m_ObjectHideFlags: 0
@@ -353,7 +354,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 11
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -620,6 +621,10 @@ MonoBehaviour:
   scorePerBlock: 2
   highScore: 0
   scoreAmount: 0
+  tetrominoPrefab: []
+  tilePrefab: {fileID: 0}
+  savedTileList: []
+  savedTetrominoList: []
 --- !u!4 &1976112485
 Transform:
   m_ObjectHideFlags: 0
@@ -757,3 +762,4 @@ MonoBehaviour:
   gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
   scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
   gamePausePopupPrefab: {fileID: 4116137464039247445, guid: 842bed10ca2c36a49b97e1f589a317eb, type: 3}
+  playOptionPopupPrefab: {fileID: 4954141563248308190, guid: f8848f5bd06d1a645a74e8d4f2652296, type: 3}

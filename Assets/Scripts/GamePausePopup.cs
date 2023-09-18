@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GamePausePopup : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
+   
     public void OnReplayClick()
     {
-        GameController.Instance.ReplayGame();
+        DataManager.Instance.ResetScore();
+        DataManager.Instance.ResetTile();
+        DataManager.Instance.ResetTetrominoData();
+        SceneManager.LoadScene("Game Play");
     }
     public void OnMainMenuClick()
     {
