@@ -8,7 +8,10 @@ public class GamePausePopup : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
-   
+    private void OnEnable()
+    {
+        UpdateScoreText();
+    }
     public void OnReplayClick()
     {
         DataManager.Instance.ResetScore();
@@ -18,6 +21,7 @@ public class GamePausePopup : MonoBehaviour
     }
     public void OnMainMenuClick()
     {
+        Debug.Log(11);
         GameController.Instance.LoadMainMenu();
     }
     public void OnClosePopup()

@@ -9,12 +9,30 @@ public class DataManager : MonoBehaviour
     [SerializeField] private int scorePerBlock = 2;
     [SerializeField] private int highScore = 0;
     [SerializeField] private int scoreAmount = 0;
+    [SerializeField] private int gold = 500;
+    [SerializeField] private int swapQuantity = 0;
+    [SerializeField] private int rotateQuantity = 0;
     public List<global::Tetromino> tetrominoPrefab;
     public Tile tilePrefab;
     public List<Vector3> savedTileList = new List<Vector3>();
     public List<TetrominoData> savedTetrominoList = new List<TetrominoData>();
 
-
+    public int SwapQuantity
+    {
+        get { return swapQuantity; }
+        set
+        {
+            swapQuantity = value;
+        }
+    }
+    public int RotateQuantity
+    {
+        get { return rotateQuantity; }
+        set
+        {
+            rotateQuantity = value;
+        }
+    }
     public int Score
     {
         get { return score; }
@@ -48,6 +66,15 @@ public class DataManager : MonoBehaviour
             scoreAmount = value;
         }
     }
+    public int Gold
+    {
+        get { return gold; }
+        set
+        {
+            gold = value;
+        }
+    }
+
 
     private void Awake()
     {
@@ -119,6 +146,33 @@ public class DataManager : MonoBehaviour
          
         }
 
+    }
+
+    public void SaveGold()
+    {
+        PlayerPrefs.SetInt("gold", gold);
+    }
+
+    public void LoadGold()
+    {
+        gold = PlayerPrefs.GetInt("gold", 500);
+    }
+
+    public void SaveRotateQuantity()
+    {
+        PlayerPrefs.SetInt("rotate", rotateQuantity);
+    }
+    public void LoadRotateQuantity()
+    {
+        rotateQuantity = PlayerPrefs.GetInt("rotate", 5);
+    }
+    public void SaveSwapQuantity()
+    {
+        PlayerPrefs.SetInt("swap", swapQuantity);
+    }
+    public void LoadSwapQuantity()
+    {
+        swapQuantity = PlayerPrefs.GetInt("swap", 5);
     }
 
     [System.Serializable]

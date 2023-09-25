@@ -11,15 +11,17 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject gamePlayWindowPrefab;
     [SerializeField] private GameObject mainMenuWindowPrefab;
     [SerializeField] private GameObject gameOverPopupPrefab;
-    public GameObject scorePopupPrefab;
     [SerializeField] private GameObject gamePausePopupPrefab;
     [SerializeField] private GameObject playOptionPopupPrefab;
-    private GameObject gamePlayWindow;
+    [SerializeField] private GameObject shopPopupPrefab;
+    public GameObject scorePopupPrefab;
+    public GameObject gamePlayWindow;
     private GameObject mainMenuWindow;
+
     private GameObject gameOverPopup;
     private GameObject gamePausePopup;
     private GameObject playOptionPopup;
-
+    private GameObject shopPopup;
 
     private void Awake()
     {
@@ -44,6 +46,7 @@ public class UIController : MonoBehaviour
         gameOverPopup = Instantiate(gameOverPopupPrefab, parentPopup.gameObject.transform);
         gamePausePopup = Instantiate(gamePausePopupPrefab, parentPopup.gameObject.transform);
         playOptionPopup = Instantiate(playOptionPopupPrefab, parentPopup.gameObject.transform);
+        shopPopup = Instantiate(shopPopupPrefab, parentPopup.gameObject.transform);
     }
 
     public void ShowWindow(WindowType type, bool isActive)
@@ -58,16 +61,7 @@ public class UIController : MonoBehaviour
                 break;
         }
     }
-    public void UpdateWindow(WindowType type)
-    {
-        switch (type)
-        {
-            case WindowType.GamePlay:
-                gamePlayWindow.GetComponent<GameplayWindow>().UpdateScoreText();
-                break;
-            
-        }
-    }
+ 
     public void ShowPopup(PopupType type, bool isActive)
     {
         switch (type)
@@ -81,18 +75,8 @@ public class UIController : MonoBehaviour
             case PopupType.PlayOption:
                 playOptionPopup.GetComponent<PlayOptionPopup>().ActivePopup(isActive);
                 break;
-
-        }
-    }
-    public void UpdatePopup(PopupType type)
-    {
-        switch (type)
-        {
-            case PopupType.GameOver:
-                gameOverPopup.GetComponent<GameOverPopup>().UpdateScoreText();
-                break;
-            case PopupType.GamePause:
-                gamePausePopup.GetComponent<GamePausePopup>().UpdateScoreText();
+            case PopupType.Shop:
+                shopPopup.GetComponent<ShopPopup>().ActivePopup(isActive);
                 break;
         }
     }
@@ -104,5 +88,5 @@ public enum WindowType
 }
 public enum PopupType
 {
-    GameOver, Score, GamePause, PlayOption
+    GameOver, Score, GamePause, PlayOption, Shop
 }

@@ -11,7 +11,12 @@ public class MainMenuWindow : MonoBehaviour
     private void Awake()
     {
         SoundManager.Instance.PlayMusic(MusicType.MainMenu);
+        DataManager.Instance.LoadGold();
+        DataManager.Instance.LoadSwapQuantity();
+        DataManager.Instance.LoadRotateQuantity();
+        DataManager.Instance.LoadScore();
     }
+
     private void Start()
     {
         foreach (RectTransform scaleTransform in scaleTransforms)
@@ -46,6 +51,10 @@ public class MainMenuWindow : MonoBehaviour
         SoundManager.Instance.PlaySfx(SfxType.ButtonClick);
         Debug.Log("Thoat game");
         Application.Quit();
+    }
+    public  void OnShopClick()
+    {
+        UIController.Instance.ShowPopup(PopupType.Shop, true);
     }
     public void ActiveMainMenuWindow(bool isActive)
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
@@ -20,10 +21,33 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
     private Camera mainCamera;
     private float xMax, xMin, yMin, yMax;
+    Toggle toggle;
+    private Vector3[] initialTilePositions;
+    private bool rotated = false;
 
+    private bool canRotate = true; 
     private void Awake()
     {
         initialPosition = transform.position;
+       
+
+        toggle = FindObjectOfType<Toggle>();
+
+    }
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+        CalculateCameraBounds();
+        initialTilePositions = new Vector3[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            initialTilePositions[i] = transform.GetChild(i).position;
+        }
+
+    }
+    private void Update()
+    {
         int maxX = int.MinValue;
         int maxY = int.MinValue;
 
@@ -43,20 +67,8 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             }
         }
 
-        width = maxX + 1; 
-        height = maxY + 1; 
-
-        //Debug.Log(width + " " + height + " " + name);
-
-    }
-
-    private void Start()
-    {
-        mainCamera = Camera.main;
-        CalculateCameraBounds();
-    }
-    private void Update()
-    {
+        width = maxX + 1;
+        height = maxY + 1;
         // Lấy vị trí hiện tại của Tetromino
         Vector3 currentPosition = transform.position;
 
@@ -66,6 +78,11 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
         // Cập nhật vị trí của Tetromino
         transform.position = currentPosition;
+        if (DataManager.Instance.RotateQuantity <= 0)
+        {
+            toggle.isOn = false;
+        }
+
     }
     private void CalculateCameraBounds()
     {
@@ -83,21 +100,32 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver && !GameController.Instance.GamePause)
         {
             var target = Camera.main.ScreenToWorldPoint(eventData.position);
-            target += offset;
             target.z = -1;
-            transform.position = target;
-            transform.localScale = new Vector3(1, 1, 1);
+            if (toggle.isOn)
+            {
+                //Khong lam gi
+            }
+            else
+            {
+                target += offset;
+                transform.position = target;
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
             DataManager.Instance.ScoreAmount = 0;
             SoundManager.Instance.PlaySfx(SfxType.TetrominoClick);
         }
 
     }
+
     public void OnDrag(PointerEventData eventData)
     {
         if (!GameController.Instance.IsPlaced(transform.gameObject) && !GameController.Instance.GameOver && !GameController.Instance.GamePause)
         {
+            canRotate = false;
             var target = Camera.main.ScreenToWorldPoint(eventData.position);
             target += offset;
+            transform.localScale = new Vector3(1, 1, 1);
             target.z = -2;
             transform.position = target;
             HighLightColor();
@@ -106,7 +134,24 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        foreach(Transform tile in GameController.Instance.gridContainer)
+        if (!GameController.Instance.IsPlaced(transform.gameObject))
+        {
+            if (gameObject.CompareTag("Square"))
+            {
+                canRotate = false;
+            }
+            if (toggle.isOn && canRotate && DataManager.Instance.RotateQuantity > 0) 
+            {
+                GameController.Instance.RotateTetromino(gameObject);
+                rotated = true;         
+            }
+            else
+            {
+                canRotate = true;
+            }
+        }
+        
+        foreach (Transform tile in GameController.Instance.gridContainer)
         {
             tile.GetComponent<Tile>().ResetColor();
         }
@@ -167,10 +212,21 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     private IEnumerator SnapAndCheckGameOver()
     {
         SnapToValidGridCell();
+        yield return new WaitForSeconds(0.1f);
+        
+        if (rotated && !GameController.Instance.currentTetrominos.Contains(gameObject))
+        {
+            if (DataManager.Instance.RotateQuantity > 0)
+            {
+                DataManager.Instance.RotateQuantity--;
+                DataManager.Instance.SaveRotateQuantity();
+                toggle.GetComponent<SwitchToggle>().UpdateRotateCount();
+            }
 
+        }
         // Chờ cho tất cả các hàm khác trong SnapToValidGridCell hoàn thành
         yield return new WaitForSeconds(1f);
-
+      
         GameController.Instance.CheckGameOver();
     }
     private void SnapToValidGridCell()
@@ -208,5 +264,14 @@ public class Tetromino : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
                 transform.position = initialPosition;
             }
         } 
+    }
+
+    public void ResetTilePosition()
+    {
+        rotated = false;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).position = initialTilePositions[i];
+        }
     }
 }

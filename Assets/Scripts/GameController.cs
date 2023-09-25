@@ -81,7 +81,6 @@ public class GameController : MonoBehaviour
 
         //DataManager.Instance.Score = 0;
         UIController.Instance.ShowWindow(WindowType.MainMenu, false);
-        UIController.Instance.UpdateWindow(WindowType.GamePlay);
         UIController.Instance.ShowWindow(WindowType.GamePlay, true);
        
         if (DataManager.Instance.savedTetrominoList.Count == 0)
@@ -90,7 +89,6 @@ public class GameController : MonoBehaviour
         }
         else
         {
-         
 
             foreach (var item in tetrominoList)
             {
@@ -99,6 +97,7 @@ public class GameController : MonoBehaviour
 
         }
     }
+
     private void SpawnGridContainAndSpawnPoints()
     {
         gridContainer = Instantiate(gridContainPrefab.transform);
@@ -113,7 +112,7 @@ public class GameController : MonoBehaviour
             DataManager.Instance.HighScore = DataManager.Instance.Score;
             PlayerPrefs.SetInt("HighScore", DataManager.Instance.HighScore);
         }
-        UIController.Instance.UpdateWindow(WindowType.GamePlay);
+        UIController.Instance.gamePlayWindow.GetComponent<GameplayWindow>().UpdateScoreText();
     }
     private void InitializeGrid()
     {
@@ -213,24 +212,6 @@ public class GameController : MonoBehaviour
     }
     private void SpawnInitialTetrominos()
     {
-        //List<int> usedIndices = new List<int>(); // Danh sách để theo dõi các prefab đã sử dụng
-        //foreach (Transform point in spawnPoints)
-        //{
-        //    GameObject tetrominoPrefab = GetRandomTetrominoPrefab();
-        //    Transform spawnPosition = point;
-        //    GameObject tetromino = Instantiate(tetrominoPrefab, spawnPosition.position, Quaternion.identity);
-        //    tetromino.transform.SetParent(spawnPosition);
-        //    currentTetrominos.Add(tetromino);
-
-        //    DataManager.TetrominoData tetrominoData = new DataManager.TetrominoData();
-        //    tetrominoData.id = tetromino.GetComponent<Tetromino>().id;
-        //    tetrominoData.name = tetromino.name;
-        //    tetrominoData.position = tetromino.transform.position;
-        //    DataManager.Instance.savedTetrominoList.Add(tetrominoData);
-        //    DataManager.Instance.SaveTetrominoData();
-
-
-        //}
         List<int> usedIndices = new List<int>(); // Danh sách để theo dõi các prefab đã sử dụng
 
         // Đảm bảo bạn có ít nhất 3 prefab để chọn
@@ -274,21 +255,56 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private GameObject GetRandomTetrominoPrefab()
-    {
-        if(DataManager.Instance.Score < 500)
-        {
-            int randomIndex = Random.Range(0, tetrominoPrefabs.Count - 5);
-            return tetrominoPrefabs[randomIndex];
-        }
-        else
-        {
-            int randomIndex = Random.Range(0, tetrominoPrefabs.Count);
-            return tetrominoPrefabs[randomIndex];
-        }
-        
-    }
 
+    public void ChangeTetromino()
+    {
+        DataManager.Instance.ResetTetrominoData();
+        List<int> usedIndices = new List<int>(); // Danh sách để theo dõi các prefab đã sử dụng
+        // Xóa Tetromino hiện tại
+        foreach (GameObject tetromino in currentTetrominos)
+        {
+            Destroy(tetromino);
+        }
+        currentTetrominos.Clear();
+
+        // Lựa chọn ngẫu nhiên 3 Tetromino từ danh sách tất cả Tetromino
+        List<GameObject> newTetrominos = new List<GameObject>();
+        for (int i = 0; i < 3; i++)
+        {
+            int randomIndex;
+
+            // Lựa chọn một prefab chưa được sử dụng trước đó
+            do
+            {
+                if (DataManager.Instance.Score < 500)
+                {
+                    randomIndex = Random.Range(0, tetrominoPrefabs.Count - 5);
+                }
+                else
+                {
+                    randomIndex = Random.Range(0, tetrominoPrefabs.Count);
+                }
+            } while (usedIndices.Contains(randomIndex));
+
+            usedIndices.Add(randomIndex); // Đánh dấu prefab đã được sử dụng
+
+            GameObject tetrominoPrefab = tetrominoPrefabs[randomIndex];
+            Transform spawnPosition = spawnPoints.GetChild(i);
+            GameObject tetromino = Instantiate(tetrominoPrefab, spawnPosition.position, Quaternion.identity);
+            tetromino.transform.SetParent(spawnPosition);
+            newTetrominos.Add(tetromino);
+
+            DataManager.TetrominoData tetrominoData = new DataManager.TetrominoData();
+            tetrominoData.id = tetromino.GetComponent<Tetromino>().id;
+            tetrominoData.name = tetromino.name;
+            tetrominoData.position = tetromino.transform.position;
+            DataManager.Instance.savedTetrominoList.Add(tetrominoData);
+            DataManager.Instance.SaveTetrominoData();
+        }
+        // Thêm các Tetromino mới vào danh sách hiện tại
+        currentTetrominos.AddRange(newTetrominos);
+
+    }
     // Gọi hàm này khi Tetromino đã được drop
     public void TetrominoUsed(GameObject tetromino)
     {
@@ -310,6 +326,75 @@ public class GameController : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public void RotateTetromino(GameObject tetromino)
+    {
+        // Lấy điểm neo của Tetromino (trong trường hợp này, giả sử điểm neo nằm ở trung tâm Tetromino)
+        Vector3 pivot = new Vector3(0, 0, tetromino.transform.position.z);
+
+        // Khởi tạo biến để lưu trữ tile có vị trí x và y nhỏ nhất
+        Vector3 minXTile = new Vector3(0, 0, 0);
+        Vector3 minYTile = new Vector3(0, 0, 0);
+
+
+
+        // Lặp qua từng tile trong Tetromino và tính toán vị trí mới sau khi xoay
+        foreach (Transform tile in tetromino.transform)
+        {
+            // Lấy vị trí ban đầu của tile
+            Vector3 oldPosition = tile.localPosition;
+
+
+            // Tính toán vị trí mới sau khi xoay bằng cách sử dụng công thức xoay
+            Vector3 newPosition = new Vector3(
+                pivot.x - oldPosition.y + pivot.y,
+                pivot.y + oldPosition.x - pivot.x,
+                oldPosition.z
+            );
+            //Debug.Log(newPosition.x);
+            //Debug.Log(newPosition.y);
+
+
+
+            // Kiểm tra nếu tile hiện tại có tọa độ x hoặc y nhỏ nhất
+            if (newPosition.x < minXTile.x)
+            {
+                minXTile = newPosition;
+            }
+
+            if (newPosition.y < minYTile.y)
+            {
+                minYTile = newPosition;
+            }
+
+        }
+        //Debug.Log(minXTile.x);
+        //Debug.Log(minYTile.y);
+
+        foreach (Transform tile in tetromino.transform)
+        {
+            // Lấy vị trí ban đầu của tile
+            Vector3 oldPosition = tile.localPosition;
+
+            // Tính toán vị trí mới sau khi xoay bằng cách sử dụng công thức xoay
+            Vector3 newPosition = new Vector3(
+                pivot.x - oldPosition.y + pivot.y,
+                pivot.y + oldPosition.x - pivot.x,
+                oldPosition.z
+            );
+            if (minXTile.x < 0)
+            {
+                newPosition.x += Mathf.Abs(minXTile.x);
+            }
+            if (minYTile.y < 0)
+            {
+                newPosition.y += Mathf.Abs(minYTile.y);
+            }
+            tile.localPosition = newPosition;
+        }
+
+
     }
 
     public void CheckAndClearFullRows()
@@ -431,6 +516,10 @@ public class GameController : MonoBehaviour
 
         }
     }
+    //public void InvokeGameOVer()
+    //{
+    //    Invoke("CheckGameOver", 0.5f);
+    //}
     public void CheckGameOver()
     {
         bool canAdd = false;
@@ -475,7 +564,6 @@ public class GameController : MonoBehaviour
         else
         {
             gameOver = true;
-            UIController.Instance.UpdatePopup(PopupType.GameOver);
             UIController.Instance.ShowPopup(PopupType.GameOver, true);
 
             Debug.Log("Thua! Không thể đặt tetromino nào vào grid.");

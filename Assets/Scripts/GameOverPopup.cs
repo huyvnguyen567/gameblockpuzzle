@@ -13,7 +13,10 @@ public class GameOverPopup : MonoBehaviour
 
     private void OnEnable()
     {
-      
+        UpdateScoreText();
+        DataManager.Instance.ResetScore();
+        DataManager.Instance.ResetTile();
+        DataManager.Instance.ResetTetrominoData();
     }
     public void OnReplayClick()
     {

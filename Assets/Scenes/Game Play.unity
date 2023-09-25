@@ -180,7 +180,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 864b95fce33dd154995a21ad747841e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -478,6 +478,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 953310004}
+  - component: {fileID: 953310007}
+  - component: {fileID: 953310006}
+  - component: {fileID: 953310005}
   m_Layer: 5
   m_Name: Popup
   m_TagString: Untagged
@@ -505,6 +508,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &953310005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953310003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &953310006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953310003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &953310007
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953310003}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 10
+  m_TargetDisplay: 0
 --- !u!1 &1587155789
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +685,9 @@ MonoBehaviour:
   scorePerBlock: 2
   highScore: 0
   scoreAmount: 0
+  gold: 0
+  swapQuantity: 0
+  rotateQuantity: 0
   tetrominoPrefab: []
   tilePrefab: {fileID: 0}
   savedTileList: []
@@ -719,7 +786,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &2110096039
 RectTransform:
@@ -760,6 +827,8 @@ MonoBehaviour:
   gamePlayWindowPrefab: {fileID: 7725267236516471813, guid: 06d2cf63370402545a4d7bebea07d52c, type: 3}
   mainMenuWindowPrefab: {fileID: 7496687702096535879, guid: 4a49004f51064814783801af20e4ded1, type: 3}
   gameOverPopupPrefab: {fileID: 4116137464039247445, guid: 45fe435b0ff68254e95a0cd21b745e57, type: 3}
-  scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
   gamePausePopupPrefab: {fileID: 4116137464039247445, guid: 842bed10ca2c36a49b97e1f589a317eb, type: 3}
   playOptionPopupPrefab: {fileID: 4954141563248308190, guid: f8848f5bd06d1a645a74e8d4f2652296, type: 3}
+  shopPopupPrefab: {fileID: 3664136006499333735, guid: 313004f9eb38aec4d82ae43cff31c3d5, type: 3}
+  scorePopupPrefab: {fileID: 2902613423747635325, guid: e57eea99deac59b4bbbbba6d9cff49c1, type: 3}
+  gamePlayWindow: {fileID: 0}
