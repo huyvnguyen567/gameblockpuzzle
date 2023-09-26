@@ -21,7 +21,6 @@ public class GamePausePopup : MonoBehaviour
     }
     public void OnMainMenuClick()
     {
-        Debug.Log(11);
         GameController.Instance.LoadMainMenu();
     }
     public void OnClosePopup()

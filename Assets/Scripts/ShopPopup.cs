@@ -7,14 +7,12 @@ using UnityEngine.Events;
 
 public class ShopPopup : MonoBehaviour
 {
-    [SerializeField] private Text goldText;
     [SerializeField] private Button freeButton;
     [SerializeField] private Color colorFreeButton;
     private UnityAction<bool> x;
 
     void OnEnable()
     {
-        UpdateGoldText();
         freeButton.GetComponent<Image>().color = Color.red;
     }
 
@@ -23,10 +21,7 @@ public class ShopPopup : MonoBehaviour
         freeButton.GetComponent<Image>().color = colorFreeButton;
     }
    
-    public void UpdateGoldText()
-    {
-        goldText.text = "Gold: " + DataManager.Instance.Gold;
-    }
+   
     public void BuyRotateItem(int price)
     {
         if (DataManager.Instance.Gold > price)
@@ -35,7 +30,6 @@ public class ShopPopup : MonoBehaviour
             DataManager.Instance.SaveGold();
             DataManager.Instance.RotateQuantity++;
             DataManager.Instance.SaveRotateQuantity();
-            UpdateGoldText();
         }
         else
         {
@@ -50,7 +44,6 @@ public class ShopPopup : MonoBehaviour
             DataManager.Instance.SaveGold();
             DataManager.Instance.SwapQuantity++;
             DataManager.Instance.SaveSwapQuantity();
-            UpdateGoldText();
         }
         else
         {
@@ -89,7 +82,6 @@ public class ShopPopup : MonoBehaviour
                             Debug.Log("gold");
                             DataManager.Instance.Gold += 100;
                             DataManager.Instance.SaveGold();
-                            UpdateGoldText();
                             break;
                     }
             }

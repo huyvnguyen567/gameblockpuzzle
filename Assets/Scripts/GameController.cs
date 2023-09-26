@@ -110,7 +110,7 @@ public class GameController : MonoBehaviour
         if (DataManager.Instance.Score > DataManager.Instance.HighScore)
         {
             DataManager.Instance.HighScore = DataManager.Instance.Score;
-            PlayerPrefs.SetInt("HighScore", DataManager.Instance.HighScore);
+            DataManager.Instance.SaveHighScore();
         }
         UIController.Instance.gamePlayWindow.GetComponent<GameplayWindow>().UpdateScoreText();
     }

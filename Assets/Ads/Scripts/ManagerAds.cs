@@ -88,12 +88,12 @@ public class ManagerAds : MonoBehaviour
                 ShowBanner();
                 break;
             }
-#elif USE_APPLOVIN_ADS
-            if (appLovinAds.bannerLoaded)
-            {
-                ShowBanner();
-                break;
-            }
+//#elif USE_APPLOVIN_ADS
+//            if (appLovinAds.bannerLoaded)
+//            {
+//                ShowBanner();
+//                break;
+//            }
 #endif
             yield return new WaitForSecondsRealtime(1);
         }
@@ -214,11 +214,11 @@ public class ManagerAds : MonoBehaviour
         {
             admob.ShowBanner();
         }
-#elif USE_APPLOVIN_ADS
-        if (appLovinAds.bannerLoaded)
-        {
-            appLovinAds.ShowBanner();
-        }
+//#elif USE_APPLOVIN_ADS
+//        if (appLovinAds.bannerLoaded)
+//        {
+//            appLovinAds.ShowBanner();
+//        }
 #endif
     }
 
@@ -226,8 +226,8 @@ public class ManagerAds : MonoBehaviour
     {
 #if USE_ADMOB
         admob.HideBanner();
-#elif USE_APPLOVIN_ADS
-        appLovinAds.HideBanner();
+//#elif USE_APPLOVIN_ADS
+//        appLovinAds.HideBanner();
 #endif
     }
 #endregion

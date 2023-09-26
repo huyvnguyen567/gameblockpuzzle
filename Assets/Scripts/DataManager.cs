@@ -17,6 +17,7 @@ public class DataManager : MonoBehaviour
     public List<Vector3> savedTileList = new List<Vector3>();
     public List<TetrominoData> savedTetrominoList = new List<TetrominoData>();
 
+    
     public int SwapQuantity
     {
         get { return swapQuantity; }
@@ -87,11 +88,19 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
+    }
+   
+
+    public void LoadHighScore()
     {
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+    }
+
+    public void SaveHighScore()
+    {
+        PlayerPrefs.SetInt("HighScore", highScore);
+        PlayerPrefs.Save();
     }
 
     public void SaveScore(int score)
@@ -133,6 +142,10 @@ public class DataManager : MonoBehaviour
     }
     public void LoadTile()
     {
+        if (!PlayerPrefs.HasKey("tile_data"))
+        {
+            SaveTile();
+        }
         string loadedJson = PlayerPrefs.GetString("tile_data");
         savedTileList = JsonHelper.FromJson<Vector3>(loadedJson);
         foreach(var tile in savedTileList)
@@ -202,6 +215,10 @@ public class DataManager : MonoBehaviour
     // Hàm để tải dữ liệu từ tệp JSON và cập nhật tetrominoDataList
     public void LoadTetrominoData()
 {
+        if (!PlayerPrefs.HasKey("tetromino_data"))
+        {
+            SaveTetrominoData();
+        }
         string jsonData = PlayerPrefs.GetString("tetromino_data");
         savedTetrominoList = JsonHelper.FromJson<TetrominoData>(jsonData);
         foreach(var tetromino in savedTetrominoList)

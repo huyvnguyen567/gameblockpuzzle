@@ -18,10 +18,10 @@ public class GameplayWindow : MonoBehaviour
     private void OnEnable()
     {
         UpdateScoreText();
-        
         DataManager.Instance.LoadTile();
         DataManager.Instance.LoadTetrominoData();
     }
+   
     public void ActiveGamePlayWindow(bool isActive)
     {
         gameObject.SetActive(isActive);

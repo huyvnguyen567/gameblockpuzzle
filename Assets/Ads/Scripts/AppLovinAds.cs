@@ -19,7 +19,8 @@
 
 //    private void Awake()
 //    {
-//        MaxSdkCallbacks.OnSdkInitializedEvent += (MaxSdkBase.SdkConfiguration sdkConfiguration) => {
+//        MaxSdkCallbacks.OnSdkInitializedEvent += (MaxSdkBase.SdkConfiguration sdkConfiguration) =>
+//        {
 //            Debug.Log("AppLovin SDK is initialized, start loading ads");
 
 //            InitAds();
@@ -231,7 +232,7 @@
 //    private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdkBase.AdInfo adInfo)
 //    {
 //        // The rewarded ad displayed and the user should receive the reward.
-//        if(adUnitId == ID_REWARD)
+//        if (adUnitId == ID_REWARD)
 //        {
 //            videoCallback(true);
 //            RequestRewardVideo();
